@@ -1,0 +1,26 @@
+
+          ldc       i         1         
+          ldc       i         2         
+          ldc       i         3         
+          ldc       b         0         
+          ldc       b         1         
+          ldc       b         0         
+          lvi       0         6         
+          lvi       0         6         
+          lvi       0         6         
+          ngi                           
+          lvi       0         6         
+          lvi       0         7         
+          lvi       0         6         
+          lvi       0         7         
+          adi                           
+          lvi       0         6         
+          lvi       0         7         
+          lvi       0         6         
+          lvi       0         7         
+          sbi                           
+          lvb       0         9         
+          lvb       0         10        
+          lvb       0         9         
+          lvb       0         10        
+          ior                           

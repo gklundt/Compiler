@@ -1,0 +1,46 @@
+#-------------------------------------------------------------
+#-------------------------------------------------------------
+obj	=	STTest.o \
+                yyerror.o \
+		Typ.o \
+                StandardTypes.o\
+		Sym.o \
+		Label.o \
+		Locality.o \
+		Namespace.o \
+		LocalityStack.o \
+		SymbolTable.o 
+#-------------------------------------------------------------
+#-------------------------------------------------------------
+STTest:		${obj}
+		g++ -o STTest ${obj} -lm
+#-------------------------------------------------------------
+STTest.o:	STTest.cpp Typ.h
+		g++ -c -g STTest.cpp
+#-------------------------------------------------------------
+yyerror.o:	yyerror.cpp yyerror.h
+		g++ -c -g yyerror.cpp
+#-------------------------------------------------------------
+Typ.o:		Typ.cpp Typ.h
+		g++ -c -g Typ.cpp
+#-------------------------------------------------------------
+StandarTypes.o:	StandardTypes.cpp StandardType.h Typ.h
+		g++ -c -g StandardTypes.cpp
+#-------------------------------------------------------------
+Sym.o:		Sym.cpp Sym.h Typ.h Label.h
+		g++ -c -g Sym.cpp
+#-------------------------------------------------------------
+Label.o:	Label.cpp Label.h
+		g++ -c -g Label.cpp
+#-------------------------------------------------------------
+Locality.o:	Locality.cpp Locality.h Namespace.h Sym.h Typ.h
+		g++ -c -g Locality.cpp
+#-------------------------------------------------------------
+Namespace.o:	Namespace.cpp Namespace.h Sym.h Typ.h
+		g++ -c -g Namespace.cpp
+#-------------------------------------------------------------
+LocalityStack.o:LocalityStack.cpp LocalityStack.h Locality.h Namespace.h Sym.h Typ.h
+		g++ -c -g LocalityStack.cpp
+#-------------------------------------------------------------
+SymbolTable.o:	SymbolTable.cpp SymbolTable.h LocalityStack.h Locality.h Namespace.h Sym.h Typ.h
+		g++ -c -g SymbolTable.cpp

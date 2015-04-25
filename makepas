@@ -1,0 +1,97 @@
+paslex: 
+	rm -f *.o
+	rm -f pastkn.h
+	rm -f paslex.cpp
+	rm -f paspar.cpp
+	rm -f pas
+	rm -f y.output
+	rm -f *~
+	rm -f y.tab.h
+	make -f makepascal
+
+clean:
+	rm -f *.o
+	rm -f pastkn.h
+	rm -f paslex.cpp
+	rm -f paspar.cpp
+	rm -f pas
+	rm -f y.output
+	rm -f *~
+	rm -f y.tab.h
+
+cleantests:
+	rm -f tests/*.trc
+	rm -f tests/*.pcd
+
+test:
+	./pas tests/p001_000.pas
+	./pas tests/p002_000.pas
+	./pas tests/p003_000.pas
+	./pas tests/p004_000.pas
+	./pas tests/p005_000.pas
+	./pas tests/p006_000.pas
+	./pas tests/p007_000.pas
+	./pas tests/p008_000.pas
+	./pas tests/p009_000.pas
+	./pas tests/p010_000.pas
+	./pas tests/p011_000.pas
+	./pas tests/p012_000.pas
+	./pas tests/p013_000.pas
+	./pas tests/p014_000.pas
+	./pas tests/p015_000.pas
+	./pas tests/p016_000.pas
+	./pas tests/p017_000.pas
+	./pas tests/p018_000.pas
+	./pas tests/p019_000.pas
+	./pas tests/p020_000.pas
+	./pas tests/p021_000.pas
+	./pas tests/p022_000.pas
+	./pas tests/p023_000.pas
+	./pas tests/p024_000.pas
+	./pas tests/p025_000.pas
+	./pas tests/p026_000.pas
+	./pas tests/p027_000.pas
+	./pas tests/p028_000.pas
+	./pas tests/p029_000.pas
+	./pas tests/p030_000.pas
+	./pas tests/p031_000.pas
+	./pas tests/p032_000.pas
+	./pas tests/p033_000.pas
+	./pas tests/p034_000.pas
+	./pas tests/p035_000.pas
+	./pas tests/p036_000.pas
+	./pas tests/p037_000.pas
+	./pas tests/p038_000.pas
+	./pas tests/p039_000.pas
+	./pas tests/p040_000.pas
+	./pas tests/p041_000.pas
+	./pas tests/p042_000.pas
+	./pas tests/p043_000.pas
+	./pas tests/p044_000.pas
+	./pas tests/p045_000.pas
+	./pas tests/p046_000.pas
+	./pas tests/p047_000.pas
+	./pas tests/p048_000.pas
+	./pas tests/p049_000.pas
+	./pas tests/p050_000.pas
+	./pas tests/p051_000.pas
+	./pas tests/p052_000.pas
+	./pas tests/p053_000.pas
+	./pas tests/p054_000.pas
+	./pas tests/p055_000.pas
+	./pas tests/p056_000.pas
+	./pas tests/p057_000.pas
+	./pas tests/p058_000.pas
+	./pas tests/p059_000.pas
+	./pas tests/p060_000.pas
+	./pas tests/p061_000.pas
+	./pas tests/p062_000.pas
+	./pas tests/p063_000.pas
+	./pas tests/p064_000.pas
+	./pas tests/p065_000.pas
+	./pas tests/p066_000.pas
+	./pas tests/p067_000.pas
+	./pas tests/p068_000.pas
+	./pas tests/p069_000.pas
+	./pas tests/p070_000.pas
+
