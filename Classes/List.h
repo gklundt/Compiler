@@ -1,26 +1,17 @@
 #ifndef List_h
 #define List_h 1
-//-----------------------------------------------------------------------------
-//File List.h contains the attributes of a List whose elements are appended
-//in temporal order
-//-----------------------------------------------------------------------------
-//Author:     Thomas R. Turner
-//E-Mail:     trturner@uco.edu
-//Course:     CMSC 4173, Translator Design
-//-----------------------------------------------------------------------------
-//Copyright August, 2007 by Thomas R. Turner.
-//Do not reproduce without permission from Thomas R. Turner.
-//-----------------------------------------------------------------------------
-//C++ include files and namespace std
-//-----------------------------------------------------------------------------
+/* *
+ * C++ include files and namespace std
+ * */
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 #include <string>
 using namespace std;
-//-----------------------------------------------------------------------------
-//A ListIndexException is thrown when the list index is invalid.
-//-----------------------------------------------------------------------------
+/* *
+ * A ListIndexException is thrown when the list index is invalid.
+ * */
 struct ListIndexException {
     ListIndexException(int i,int m)
     {   cout << endl;
@@ -29,9 +20,10 @@ struct ListIndexException {
         cout << "Valid indexes are in the range 0 <= i < " << m << ".";
     }
 };
-//-----------------------------------------------------------------------------
-//A ListException is thrown when the list is either full or empty.
-//-----------------------------------------------------------------------------
+/* *
+ * A ListException is thrown when the list is either full or empty.
+ * */
+
 struct ListException {
   ListException(const char* m)
   {  cout << endl;
@@ -85,7 +77,8 @@ public:
             L[a]->Print(o);
         }
     }
-	// Added by Gordon p03
+
+	/*  Added by Gordon p03  */
     string Print()
     {  string str ;
        str.append("{");
