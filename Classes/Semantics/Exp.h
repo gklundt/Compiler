@@ -21,11 +21,11 @@ using namespace std;
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 class Exp {
-	Exp* LExp;
-	Exp* RExp;
 	Typ* T;
-	PCode* P;
 public:
+	Exp* RExp;
+	Exp* LExp;
+	PCode* P;
 	Exp(Typ* t, PCode* p);
 	Exp(Exp* l, Exp* r, Typ* t, PCode* p);
 	void PPrint(ostream& o);             //Print the P-Code of this instance

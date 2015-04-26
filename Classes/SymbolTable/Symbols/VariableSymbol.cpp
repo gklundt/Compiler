@@ -28,3 +28,7 @@ int VariableSymbol::LexicalLevel(void) {
 int VariableSymbol::Address(void) {
 	return address;
 }
+
+void VariableSymbol::Print(ostream& o) {
+	Sym::Print(o, 0);
+}

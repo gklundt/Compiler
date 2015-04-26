@@ -57,7 +57,7 @@ obj =  Address.o \
 	Semantics.o \
 	String.o 
 
-all: ${obj} yl
+all: yl ${obj}
 	g++ -c paslex.cpp paspar.cpp
 	g++ ${obj} paslex.o paspar.o -o pas -ll -ly
 

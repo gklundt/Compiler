@@ -49,6 +49,7 @@ extern unsigned col;
 %type  <exp>     procedure_statement
 %type  <exp>     variable
 
+%type  <explist> program_body
 %type  <explist> expression_list
 %type  <explist> statement 
 %type  <explist> compound_statement 
@@ -122,7 +123,8 @@ program_declarations: variable_declarations subprogram_declarations
 	{sem.tfs << endl << "#003 program_declarations --> variable_declarations subprogram_declarations";}
 	;
 program_body: compound_statement PERIOD 
-	{sem.tfs << endl << "#004 program_body --> compound_statement .";}
+	{sem.tfs << endl << "#004 program_body --> compound_statement .";
+	$$=sem.program_body($1);}
 	;
 program_parameters: /*EMPTY*/
 	{sem.tfs << endl << "#005 program_parameters --> empty";}

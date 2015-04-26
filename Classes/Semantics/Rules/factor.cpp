@@ -23,7 +23,6 @@ Exp* Semantics::factor_1(string* id) {
 			E = factor_1_function((FunctionSymbol*) S);
 		else
 			yyerror("Semantic error - ID must be a function ");
-
 		break;
 	default:
 		break;
@@ -52,22 +51,22 @@ Exp* Semantics::factor_1_variable(VariableSymbol* S) {
 }
 
 Exp* Semantics::factor_1_function(FunctionSymbol* S) {
+	//ToDo: Code may be incorrect here.  Possible if-brace issue
 	Typ* T = S->Type();
 	Subprogram* F;
-	if (T->IsSubprogram())
+	if (T->IsSubprogram()) {
 		F = (Subprogram*) T;
+	}
 	Typ* RT = F->ReturnType();
 	PCode* P;
+
 	Exp* E;
 	int ll = ST.LexicalLevel() - S->LexicalLevel();
 	P = new PCode("", "mst", ll, "");
 	E = new Exp(ST.TVoid(), P);
+
 	int pc = S->ParameterCount();
-	P = new PCode(""                             //Label
-			, "cup"                          //P-Code Op - Call User Procedure
-			, pc                             //Operand 1 - Parameter Count
-			, S->ELabel()                    //Operand 2 - Entry Label
-			);
+	P = new PCode("", "cup", pc, S->ELabel());
 	E = new Exp(E, 0, RT, P);
 	E->Print(tfs);
 	return E;
@@ -189,13 +188,6 @@ Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e) {
 	//--------------------------------------------------------------------
 	//Obtain the function type FT, and the return type, RT, of the function
 	//--------------------------------------------------------------------
-	tfs << "what am I about to print?" << endl;
-	S->Print(tfs, 6);
-	e->Print(tfs);
-	tfs << "what did I just print?" << endl;
-	tfs << endl;
-	tfs << endl;
-	tfs << endl;
 	Typ* RT = S->ReturnType();
 	PCode* P;
 	Exp* E;
@@ -233,7 +225,7 @@ Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e) {
 //if ID is a standard function
 //--------------------------------------------------------------------
 Exp* Semantics::StandardFunction(StandardFunctionSymbol* S, List<Exp*>* e) {
-
+	//ToDo:  This code was completely commented before.
 	PCode* P;
 	//--------------------------------------------------------------------
 	//All Standard Functions have one and only one argument

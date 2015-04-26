@@ -9,6 +9,7 @@
 #define SEMANTICS_H_
 
 #include "Exp.h"
+#include "Height.h"
 #include "../SymbolTable/SymbolTable.h"
 #include "../SymbolTable/Symbols/ProgramSymbol.h"
 #include "../SymbolTable/Symbols/ProcedureSymbol.h"
@@ -130,6 +131,12 @@ public:
 
 	void subprogram_declaration(void);
 
+	List<Exp*>* program_body(List<Exp*>* compound_statement);
+
+	List<Exp*>* subprogram_epilog(SubprogramSymbol* S,
+			List<Exp*>* compound_statement);
+
+	List<Exp*>* subprogram_prolog(SubprogramSymbol* S);
 }
 ;
 

@@ -14,6 +14,7 @@ public:
 	void setAddress(int a);
 	int LexicalLevel(void);
 	int Address(void);
+	void Print(ostream& o);
 };
 
 #endif
