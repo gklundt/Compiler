@@ -50,8 +50,7 @@ Typ* SubprogramSymbol::ReturnType(void) {
 		ST = (Subprogram*) T;
 		return ST->ReturnType();
 	} else {
-		//ToDo: fix this
-		//yyerror("Semantic error: no return type.");
+		yyerror("Semantic error: no return type.");
 	}
 	return NULL;
 }

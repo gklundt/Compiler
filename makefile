@@ -184,8 +184,8 @@ Typ.o: Classes/Types/Typ.cpp
 	g++ -c -g Classes/Types/Typ.cpp
 
 clean:
-	rm -rf *.o
-	rm -rf *.*~
+	rm -f *.o
+	rm -f *.*~
 	rm -f paslex.cpp
 	rm -f paspar.cpp
 	rm -f y.tab.h
@@ -193,3 +193,6 @@ clean:
 	rm -f pastkn.h
 	rm -f pas
 	rm -f Classes/Semantics/String.o
+	rm -f tests/*.trc
+	rm -f tests/*.pcd
+

@@ -136,8 +136,7 @@ identifier_list: ID
 	{sem.tfs << endl << "#008 identifier_list --> ID(" << (*$1) << ")"; 
 	 $$=sem.identifier_list($1);}
 	| identifier_list COMMA ID
-	{sem.tfs << endl << "#009 identifier_list --> identifier_list() , ID(" << (*$3) 
-		 << ")"; 
+	{sem.tfs << endl << "#009 identifier_list --> identifier_list() , ID(" << (*$3) << ")"; 
 	 $$=sem.identifier_list($1,$3);}
 	;
 variable_declarations: /*EMPTY*/
@@ -260,7 +259,7 @@ relop: EQU
 	{sem.tfs << endl << "#046 relop --> > ";}
 	| GEQ 
 	{sem.tfs << endl << "#047 relop --> >= ";}
-	; //----------------------------------------------------------------------------------------
+	; 
 simple_expression: term 
 	{sem.tfs << endl << "#048 simple_expression --> term ";
 	 $$=sem.simple_expression($1);}
@@ -328,9 +327,6 @@ factor: ID
 	;
 %%
 
-//--------------------------------------------------------------------
-//FileException
-//--------------------------------------------------------------------
 struct FileException {
    FileException(const char* fn)
    {   cout << endl;
