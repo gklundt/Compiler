@@ -1,25 +1,4 @@
 %{
-//-----------------------------------------------------------------------------
-// Author 1:	Mrs. Debra Hogue
-// Student ID:	*20343220
-// E-Mail:		dhogue1@uco.edu
-// Author 2: 	Mr. Gordon Klundt
-// Student ID:	*20336928
-// E-Mail:		gklundt@uco.edu
-// Author 3:	Mr. William McLain
-// Student ID:	*10066002
-// E-Mail:		wmclain@uco.edu
-// Author 4: 	Mr. Noah Sefcik
-// Student ID:	*20309262
-// E-Mail:		nsefcik@uco.edu
-// Course:		CMSC 4173 - Translator Design
-// CRN:			27419 Spring 2015
-// Project:		p08
-// Due:			March ##, 2015
-// Account:		tt098
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-	
 /* Subset Pascal Scanner */
 
 /* Include standard libraries for string and text manipulation */
@@ -27,16 +6,19 @@
 #include <locale>
 
 /* include the token defs from y.tab.h */
-#include "List.h"
+//#include "List.h"
 #include "pastkn.h" 	/* token codes from the parser */
+#include "Classes/Semantics/Semantics.h"
 
 using namespace std;
 
 unsigned line=1, col=1;
 int tkn_handler(int,string);
 
-extern ofstream pfs;
-extern ofstream tfs;
+/* declared in paspar.y */
+extern Semantics sem;
+//extern ofstream pfs;
+//extern ofstream tfs;
 
 %}
 
@@ -173,7 +155,7 @@ int tkn_handler(int tkn_code, string tkn_name ){
 	/* Print the token to file */
 	//fprintf (yyout, "Token:Code=%d Name=%10s line=%4u col=%4u Spelling=\"%s\"\n", tkn_code, tkn_name.c_str(), line, col, yytext ); 
 	//printf (	"Token:Code=%d Name=%10s line=%4u col=%4u Spelling=\"%s\"\n", tkn_code, tkn_name.c_str(), line, col, yytext ); 
-	tfs << endl << "Token:Code=" << tkn_code << " Name=" << tkn_name << " line=" << line << " col=" << col << " Spelling=\"" << yytext << "\""; 
+	sem.tfs << endl << "Token:Code=" << tkn_code << " Name=" << tkn_name << " line=" << line << " col=" << col << " Spelling=\"" << yytext << "\""; 
 	/* Increment the column number*/
 	col+=yyleng;
 
