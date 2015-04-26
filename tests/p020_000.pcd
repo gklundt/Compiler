@@ -1,0 +1,3 @@
+
+          ldc       c         'hello, i love you.'
+          csp                 wln       

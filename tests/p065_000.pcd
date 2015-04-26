@@ -1,0 +1,10 @@
+
+          lvi       0         5         
+          lvi       0         6         
+          lvi       0         5         
+          lvi       0         6         
+          grt       i                   
+          lvi       0         5         
+          lvi       0         6         
+          ldc       i         3         
+          ldc       i         4         

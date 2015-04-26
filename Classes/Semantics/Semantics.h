@@ -3,8 +3,6 @@
 
 //#ifndef LINECOL_H_
 //#define LINECOL_H_
-//unsigned line;
-//unsigned col;
 //#endif
 
 #ifndef SEMANTICS_H_
@@ -22,6 +20,9 @@
 
 using namespace std;
 
+extern unsigned line;
+extern unsigned col;
+
 class Semantics {
 public:
 	Semantics();
@@ -30,6 +31,7 @@ public:
 	SymbolTable ST;
 	ofstream pfs;
 	ofstream tfs;
+
 	Label L;
 
 	// Semantic Functions

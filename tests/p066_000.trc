@@ -1,0 +1,281 @@
+
+Token:Code=292 Name=PROGRAM line=12 col=1 Spelling="program"
+Token:Code=298 Name=ID line=12 col=9 Spelling="p066_000"
+Token:Code=265 Name=SEMICOLON line=12 col=17 Spelling=";"
+#005 program_parameters --> empty
+#002 program_head --> PROGRAM ID(p066_000) program_parameters ;
+#010 variable_declarations --> empty
+Token:Code=296 Name=VAR line=13 col=3 Spelling="var"
+Token:Code=298 Name=ID line=13 col=7 Spelling="c"
+#008 identifier_list --> ID(c) identifier_list={c}
+Token:Code=266 Name=COLON line=13 col=8 Spelling=":"
+Token:Code=298 Name=ID line=13 col=9 Spelling="real"
+#014 standard_type --> ID(real)
+Symbol(Type Symbol) id(real)
+  type(Real)
+    size(1) alignment(1)
+#012 type --> standard_type 
+Token:Code=265 Name=SEMICOLON line=13 col=13 Spelling=";"
+#011 variable_declarations --> variable_declarations VAR identifier_list({c}) : type ; 
+Token:Code=285 Name=FUNCTION line=14 col=3 Spelling="function"
+#015 subprogram_declarations --> empty
+Token:Code=298 Name=ID line=14 col=12 Spelling="celsius"
+Token:Code=273 Name=LPAREN line=14 col=19 Spelling="("
+Token:Code=298 Name=ID line=14 col=20 Spelling="f"
+#008 identifier_list --> ID(f) identifier_list={f}
+Token:Code=266 Name=COLON line=14 col=21 Spelling=":"
+Token:Code=298 Name=ID line=14 col=22 Spelling="real"
+#014 standard_type --> ID(real)
+Symbol(Type Symbol) id(real)
+  type(Real)
+    size(1) alignment(1)
+#012 type --> standard_type 
+#022 parameter_list --> identifier_list({f}) : type 
+Token:Code=274 Name=RPAREN line=14 col=26 Spelling=")"
+#021 sub_program_parameters --> ( parameter_list ) 
+Token:Code=266 Name=COLON line=14 col=27 Spelling=":"
+Token:Code=298 Name=ID line=14 col=28 Spelling="real"
+#014 standard_type --> ID(real)
+Symbol(Type Symbol) id(real)
+  type(Real)
+    size(1) alignment(1)
+Token:Code=265 Name=SEMICOLON line=14 col=32 Spelling=";"
+#018 subprogram_head --> FUNCTION ID(celsius) sub_program_parameters : standard_type ; 
+#010 variable_declarations --> empty
+Token:Code=280 Name=BEGIN line=15 col=3 Spelling="begin"
+Token:Code=298 Name=ID line=16 col=5 Spelling="celsius"
+Token:Code=262 Name=ASSIGN line=16 col=12 Spelling=":="
+#034 variable --> ID(celsius)
+Symbol(Function Symbol) id(celsius)
+  type(Subprogram)
+      Return Type
+        type(Real)
+          size(1) alignment(1)
+      Parameter Types
+        type(Real)
+          size(1) alignment(1)
+  lexicallevel(1) elabel(L00001) splabel(L00002) eplabel(L00003)
+          lda       0         0         
+Token:Code=299 Name=INTLIT line=16 col=14 Spelling="5"
+#068 factor --> INTLIT(5) 
+#056 term --> factor 
+Token:Code=260 Name=STAR line=16 col=15 Spelling="*"
+#058 mulop --> * 
+Token:Code=273 Name=LPAREN line=16 col=16 Spelling="("
+Token:Code=298 Name=ID line=16 col=17 Spelling="f"
+Token:Code=259 Name=MINUS line=16 col=18 Spelling="-"
+#063 factor --> ID(f) 
+Symbol(Variable Symbol) id(f)
+  type(Real)
+    size(1) alignment(1)
+  lexicallevel(2) address(5)
+#056 term --> factor 
+#048 simple_expression --> term 
+#054 addop --> - 
+Token:Code=299 Name=INTLIT line=16 col=19 Spelling="32"
+#068 factor --> INTLIT(32) 
+#056 term --> factor 
+Token:Code=274 Name=RPAREN line=16 col=21 Spelling=")"
+#050 simple_expression --> simple_expression addop term 
+#040 expression --> simple_expression 
+#066 factor --> ( expression ) 
+#057 term --> term mulop factor 
+Token:Code=261 Name=SLASH line=16 col=22 Spelling="/"
+#059 mulop --> / 
+Token:Code=300 Name=REALIT line=16 col=23 Spelling="9.0"
+#069 factor --> REALIT(9.0) 
+#057 term --> term mulop factor 
+Token:Code=284 Name=END line=17 col=3 Spelling="end"
+#048 simple_expression --> term 
+#040 expression --> simple_expression 
+#029 statement --> variable := expression 
+          lda       0         0         
+          ldc       i         5         
+          flt                           
+          lvr       0         5         
+          ldc       i         32        
+          flt                           
+          sbr                           
+          mpr                           
+          ldc       r         9.0       
+          dvr                           
+          sti       r                   
+#027 statement_list --> statement 
+#026 optional_statements --> statement_list 
+#024 compound_statement --> BEGIN optional_statements END 
+#017 subprogram_declaration --> subprogram_head variable_declarations compound_statement 
+Locality: lexical level 2
+
+  Symbol(Variable Symbol) id(f)
+    type(Real)
+      size(1) alignment(1)
+    lexicallevel(2) address(5)
+
+Token:Code=265 Name=SEMICOLON line=17 col=15 Spelling=";"
+#016 subprogram_declarations --> subprogram_declarations subprogram_declaration ; 
+Token:Code=280 Name=BEGIN line=18 col=1 Spelling="begin"
+#003 program_declarations --> variable_declarations subprogram_declarations
+Token:Code=298 Name=ID line=19 col=3 Spelling="c"
+Token:Code=262 Name=ASSIGN line=19 col=4 Spelling=":="
+#034 variable --> ID(c)
+Symbol(Variable Symbol) id(c)
+  type(Real)
+    size(1) alignment(1)
+  lexicallevel(1) address(5)
+          lda       0         5         
+Token:Code=298 Name=ID line=19 col=6 Spelling="celsius"
+Token:Code=273 Name=LPAREN line=19 col=13 Spelling="("
+Token:Code=299 Name=INTLIT line=19 col=14 Spelling="77"
+#068 factor --> INTLIT(77) 
+#056 term --> factor 
+Token:Code=274 Name=RPAREN line=19 col=16 Spelling=")"
+#048 simple_expression --> term 
+#040 expression --> simple_expression 
+#038 expression_list --> expression 
+#065 factor --> ID(celsius) ( expression_list ) 
+          mst       0                   
+          ldc       i         77        
+          cup       1         L00001    
+#056 term --> factor 
+Token:Code=284 Name=END line=20 col=1 Spelling="end"
+#048 simple_expression --> term 
+#040 expression --> simple_expression 
+#029 statement --> variable := expression 
+          lda       0         5         
+          mst       0                   
+          ldc       i         77        
+          cup       1         L00001    
+          sti       r                   
+#027 statement_list --> statement 
+#026 optional_statements --> statement_list 
+#024 compound_statement --> BEGIN optional_statements END 
+Token:Code=263 Name=PERIOD line=20 col=14 Spelling="."
+#004 program_body --> compound_statement .
+#001 program --> program_head program_declarations program_body
+Locality: lexical level 1
+
+  Symbol(Variable Symbol) id(c)
+    type(Real)
+      size(1) alignment(1)
+    lexicallevel(1) address(5)
+  Symbol(Function Symbol) id(celsius)
+    type(Subprogram)
+        Return Type
+          type(Real)
+            size(1) alignment(1)
+        Parameter Types
+          type(Real)
+            size(1) alignment(1)
+    lexicallevel(1) elabel(L00001) splabel(L00002) eplabel(L00003)
+
+Locality: lexical level 0
+
+  Symbol(Standard Function Symbol) id(abs)
+    type(Void)
+      size(0) alignment(0)
+    cspid(abs)
+  Symbol(Type Symbol) id(boolean)
+    type(Boolean)
+      size(1) alignment(1)
+  Symbol(Type Symbol) id(char)
+    type(Character)
+      size(1) alignment(1)
+  Symbol(Standard Function Symbol) id(chr)
+    type(Void)
+      size(0) alignment(0)
+    cspid(chr)
+  Symbol(Constant Symbol) id(false)
+    type(Boolean)
+      size(1) alignment(1)
+    Constant value(0)
+      type(Boolean)
+        size(1) alignment(1)
+  Symbol(Type Symbol) id(integer)
+    type(Integer)
+      size(1) alignment(1)
+  Symbol(Standard Function Symbol) id(ord)
+    type(Void)
+      size(0) alignment(0)
+    cspid(ord)
+  Symbol(Program Symbol) id(p066_000)
+    type(Void)
+      size(0) alignment(0)
+    lexicallevel(0) elabel(L00001) splabel(L00002) eplabel(L00003)
+  Symbol(Standard Function Symbol) id(pred)
+    type(Void)
+      size(0) alignment(0)
+    cspid(dec)
+  Symbol(Standard Procedure Symbol) id(readchar)
+    type(Void)
+      size(0) alignment(0)
+    cspid(rdc)
+  Symbol(Standard Procedure Symbol) id(readinteger)
+    type(Void)
+      size(0) alignment(0)
+    cspid(rdi)
+  Symbol(Standard Procedure Symbol) id(readln)
+    type(Void)
+      size(0) alignment(0)
+    cspid(rln)
+  Symbol(Standard Procedure Symbol) id(readreal)
+    type(Void)
+      size(0) alignment(0)
+    cspid(rdr)
+  Symbol(Standard Procedure Symbol) id(readstring)
+    type(Void)
+      size(0) alignment(0)
+    cspid(rds)
+  Symbol(Type Symbol) id(real)
+    type(Real)
+      size(1) alignment(1)
+  Symbol(Standard Function Symbol) id(round)
+    type(Void)
+      size(0) alignment(0)
+    cspid(rnd)
+  Symbol(Standard Function Symbol) id(sqrt)
+    type(Void)
+      size(0) alignment(0)
+    cspid(sqt)
+  Symbol(Standard Function Symbol) id(succ)
+    type(Void)
+      size(0) alignment(0)
+    cspid(inc)
+  Symbol(Constant Symbol) id(true)
+    type(Boolean)
+      size(1) alignment(1)
+    Constant value(1)
+      type(Boolean)
+        size(1) alignment(1)
+  Symbol(Standard Function Symbol) id(trunc)
+    type(Void)
+      size(0) alignment(0)
+    cspid(trc)
+  Symbol(Standard Procedure Symbol) id(writeboolean)
+    type(Void)
+      size(0) alignment(0)
+    cspid(wrb)
+  Symbol(Standard Procedure Symbol) id(writechar)
+    type(Void)
+      size(0) alignment(0)
+    cspid(wrc)
+  Symbol(Standard Procedure Symbol) id(writeexponential)
+    type(Void)
+      size(0) alignment(0)
+    cspid(wre)
+  Symbol(Standard Procedure Symbol) id(writefixed)
+    type(Void)
+      size(0) alignment(0)
+    cspid(wrf)
+  Symbol(Standard Procedure Symbol) id(writeinteger)
+    type(Void)
+      size(0) alignment(0)
+    cspid(wri)
+  Symbol(Standard Procedure Symbol) id(writeln)
+    type(Void)
+      size(0) alignment(0)
+    cspid(wln)
+  Symbol(Standard Procedure Symbol) id(writestring)
+    type(Void)
+      size(0) alignment(0)
+    cspid(wrs)
+

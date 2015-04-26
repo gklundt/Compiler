@@ -2,9 +2,6 @@
 
 struct TypeException {
 	TypeException(Sym* s) {
-		//ToDo: line and col should be extern somehow
-		int line = 1;
-		int col = 1;
 		cout << endl;
 		cout << "Error on line " << line << " column " << col;
 		cout << endl;

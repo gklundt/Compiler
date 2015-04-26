@@ -39,8 +39,7 @@ int SubprogramSymbol::ParameterCount(void) {
 		ST = (Subprogram*) T;
 		return ST->ParameterCount();
 	} else {
-		//ToDo: fix this
-		//yyerror("Semantic error: no return type.");
+		yyerror("Semantic error: no return type.");
 	}
 	return -1;
 }

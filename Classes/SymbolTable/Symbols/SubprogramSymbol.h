@@ -6,6 +6,8 @@
 #ifndef SUBPROGRAMSYMBOL_H
 #define SUBPROGRAMSYMBOL_H
 
+extern void yyerror(string s);
+
 class SubprogramSymbol: public Sym {
 	int lexicallevel;                             //Lexical level of subprogram
 	string elabel;                                //Entry label
