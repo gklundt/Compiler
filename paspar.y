@@ -241,7 +241,7 @@ expression_list: expression
 	 $$=sem.expression_list($1,$3);}
 	;
 expression: simple_expression 
-	{sem.tfs << endl << "#040 expression --> simple_expression ";
+	{sem.tfs << endl << "#040 expression --> simple_expression "; 
 	 $$=sem.expression($1);}
 	| simple_expression relop simple_expression 
 	{sem.tfs << endl << "#041 expression --> simple_expression relop simple_expression ";

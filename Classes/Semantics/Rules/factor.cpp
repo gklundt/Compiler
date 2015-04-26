@@ -3,7 +3,7 @@
 Exp* Semantics::factor_1(string* id) {
 	Sym* S = ST.Find(*id);
 	if (!S)
-		yyerror("Semantic error - ID cannot be found");
+		yyerror("Semantic error - ID cannot be found(factor:6)");
 	if (S)
 		S->Print(tfs, 0);
 	symkind sk = S->Symkind();
@@ -100,7 +100,7 @@ Exp* Semantics::factor_2(string* id, Exp* e) {
 	//------------------------------------------------------------------
 	Sym* S = ST.Find(*id);       //Find the array identifier
 	if (!S)
-		yyerror("Semantic error - ID cannot be found");
+		yyerror("Semantic error - ID cannot be found(factor:103)");
 	if (!S->IsVariableSymbol())
 		yyerror("Semantic error: identifier is not a variable");
 	VariableSymbol* V = (VariableSymbol*) S;
@@ -185,9 +185,17 @@ Exp* Semantics::factor_2(string* id, Exp* e) {
 //     mst  e1
  //--------------------------------------------------------------------
  * */
-Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e) { //--------------------------------------------------------------------
-																 //Obtain the function type FT, and the return type, RT, of the function
-																 //--------------------------------------------------------------------
+Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e) {
+	//--------------------------------------------------------------------
+	//Obtain the function type FT, and the return type, RT, of the function
+	//--------------------------------------------------------------------
+	tfs << "what am I about to print?" << endl;
+	S->Print(tfs, 6);
+	e->Print(tfs);
+	tfs << "what did I just print?" << endl;
+	tfs << endl;
+	tfs << endl;
+	tfs << endl;
 	Typ* RT = S->ReturnType();
 	PCode* P;
 	Exp* E;
@@ -225,31 +233,44 @@ Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e) { //-------------
 //if ID is a standard function
 //--------------------------------------------------------------------
 Exp* Semantics::StandardFunction(StandardFunctionSymbol* S, List<Exp*>* e) {
-	/*
-	 PCode* P;
-	 //--------------------------------------------------------------------
-	 //All Standard Functions have one and only one argument
-	 //--------------------------------------------------------------------
-	 e->First();
-	 Exp* E=e->Member();
-	 Typ* A=E->Type();
-	 string op=S->CSPID();
-	 Typ* F;
-	 if (op=="dec"||op=="inc") F=A;
-	 if (op=="rnd"||op=="trc") F=ST.TInteger();
-	 if (op=="chr") F=ST.TChar();
-	 if (op=="ord") F=ST.TInteger();
-	 if ((op=="abs") && (A==ST.TInteger())) op="abi";
-	 if ((op=="abs") && (A==ST.TReal())) op="abr";
-	 P=new PCode
-	 (""                             //Label
-	 ,op                             //P-Code instruction for the function
-	 ,""
-	 ,""
-	 );
-	 E=new Exp(E,0,F,P);
-	 return E;
-	 */
+
+	PCode* P;
+	//--------------------------------------------------------------------
+	//All Standard Functions have one and only one argument
+	//--------------------------------------------------------------------
+	e->First();
+	Exp* E = e->Member();
+	Typ* A = E->Type();
+	string op = S->CSPID();
+	Typ* F;
+	if (op == "dec" || op == "inc")
+		F = A;
+	if (op == "rnd" || op == "trc")
+		F = ST.TInteger();
+	if (op == "chr")
+		F = ST.TChar();
+	if (op == "ord")
+		F = ST.TInteger();
+	if ((op == "sqt"))
+		F = ST.TReal();
+	if ((op == "abs") && (A == ST.TInteger()))
+		F = ST.TInteger();
+	if ((op == "abs") && (A == ST.TReal()))
+		F = ST.TReal();
+
+	if ((op == "abs") && (A == ST.TInteger()))
+		op = "abi";
+	if ((op == "abs") && (A == ST.TReal()))
+		op = "abr";
+	if ((op == "sqt") && (A == ST.TInteger()))
+		op = "sqi";
+	if ((op == "sqt") && (A == ST.TReal()))
+		op = "sqr";
+
+	P = new PCode("", op, "", "");
+	E = new Exp(E, 0, F, P);
+	return E;
+
 	return 0;
 }
 //--------------------------------------------------------------------
@@ -262,14 +283,16 @@ Exp* Semantics::factor_3(string* id, List<Exp*>* e) {
 	//Validate that (1) the identifier is in the symbol table and
 	//(2) that the identifier is a function symbol
 	//--------------------------------------------------------------------
-	if (!S)
-		yyerror("Semantic error - ID cannot be found");
-	if (S->IsFunctionSymbol())
+	if (!S) {
+		yyerror("Semantic error - ID cannot be found(factor:286)");
+	}
+	if (S->IsFunctionSymbol()) {
 		return UserFunction((FunctionSymbol*) S, e);
-	else if (S->IsStandardFunctionSymbol())
+	} else if (S->IsStandardFunctionSymbol()) {
 		return StandardFunction((StandardFunctionSymbol*) S, e);
-	else
+	} else {
 		yyerror("Semantic error - ID must be function");
+	}
 	return 0;
 }
 //--------------------------------------------------------------------
