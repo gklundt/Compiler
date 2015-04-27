@@ -38,6 +38,7 @@ Sym::Sym(symkind k, const char* i, Typ* u) :
 Sym::Sym(symkind k, string i, Typ* u) :
 		sk(k), id(i), t(u) {
 }
+
 //-----------------------------------------------------------------------------
 string Sym::SymkindSymbol(symkind sk) {
 	switch (sk) {

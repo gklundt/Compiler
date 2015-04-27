@@ -27,6 +27,8 @@
  -------------------------------------------------------------------------
  */
 Exp* Semantics::UserSubprogram(SubprogramSymbol* S, List<Exp*>* e) {
+	cout << "Exp* Semantics::UserSubprogram(SubprogramSymbol* S, List<Exp*>* e)"
+			<< endl;
 	//--------------------------------------------------------------------
 	//Obtain the function type FT, and the return type, RT, of the function
 	//--------------------------------------------------------------------
@@ -58,6 +60,5 @@ Exp* Semantics::UserSubprogram(SubprogramSymbol* S, List<Exp*>* e) {
 			, S->ELabel()                    //Operand 2 - Entry Label
 			);
 	E = new Exp(E, 0, RT, P);
-	E->Print(tfs);
 	return E;
 }

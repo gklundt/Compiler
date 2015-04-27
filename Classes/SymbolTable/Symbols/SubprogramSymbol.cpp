@@ -1,12 +1,17 @@
+//ToDo: Fix this stuff
 #include "SubprogramSymbol.h"
 
 SubprogramSymbol::SubprogramSymbol(symkind sk, string id, Typ* t, int ll) :
 		Sym(sk, id, t), lexicallevel(ll) {
-	Label L;
+	cout
+			<< "SubprogramSymbol::SubprogramSymbol(symkind sk, string id, Typ* t, int ll)"
+			<< endl;
+
 	elabel = L.New();
 	splabel = L.New();
 	eplabel = L.New();
 }
+
 void SubprogramSymbol::Print(ostream& o, int indent) {
 	Sym::Print(o, indent);
 	o << endl;
@@ -24,12 +29,15 @@ int SubprogramSymbol::LexicalLevel(void) {
 	return lexicallevel;
 }
 string SubprogramSymbol::ELabel(void) {
+	cout << "string SubprogramSymbol::ELabel(void)" << endl;
 	return elabel;
 }
 string SubprogramSymbol::SPLabel(void) {
+	cout << "string SubprogramSymbol::SPLabel(void)" << endl;
 	return splabel;
 }
 string SubprogramSymbol::EPLabel(void) {
+	cout << "string SubprogramSymbol::EPLabel(void)" << endl;
 	return eplabel;
 }
 int SubprogramSymbol::ParameterCount(void) {
@@ -45,10 +53,11 @@ int SubprogramSymbol::ParameterCount(void) {
 }
 Typ* SubprogramSymbol::ReturnType(void) {
 	Typ* T = Sym::Type();
-	Subprogram* ST = 0;
+	Subprogram* st = 0;
+
 	if (T->IsSubprogram()) {
-		ST = (Subprogram*) T;
-		return ST->ReturnType();
+		st = (Subprogram*) T;
+		return st->ReturnType();
 	} else {
 		yyerror("Semantic error: no return type.");
 	}

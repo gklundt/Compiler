@@ -5,6 +5,7 @@
 //simple_expression -> term
 //-------------------------------------------------------------------------
 Exp* Semantics::simple_expression(Exp* term) {
+	cout << "Exp* Semantics::simple_expression(Exp* term)" << endl;
 	return term;
 }
 //--------------------------------------------------------------------
@@ -12,6 +13,8 @@ Exp* Semantics::simple_expression(Exp* term) {
 //--------------------------------------------------------------------
 
 Exp* Semantics::simple_expression(string* sign, Exp* term) {
+	cout << "Exp* Semantics::simple_expression(string* sign, Exp* term)"
+			<< endl;
 	//------------------------------------------------------------------
 	//Emit a semantic error if the term has neither type integer or real
 	//------------------------------------------------------------------
@@ -38,7 +41,6 @@ Exp* Semantics::simple_expression(string* sign, Exp* term) {
 		P = new PCode("", "ngr", "", "");
 		E = new Exp(term, 0, ST.TReal(), P);
 	}
-	E->Print(pfs); //printing p-code to .pcd file
 	return E;
 }
 //--------------------------------------------------------------------
@@ -46,6 +48,7 @@ Exp* Semantics::simple_expression(string* sign, Exp* term) {
 //expressions
 //--------------------------------------------------------------------
 Exp* Semantics::add(Exp* l, Exp* r) {
+	cout << "Exp* Semantics::add(Exp* l, Exp* r)" << endl;
 	//--------------------------------------------------------------------
 	//Coerce left and right expressions to real if either is integer and
 	//the other is real
@@ -64,7 +67,6 @@ Exp* Semantics::add(Exp* l, Exp* r) {
 		P = new PCode("", "adi", "", "");
 		E = new Exp(l, r, ST.TInteger(), P);
 	}
-	E->Print(pfs); //printing p-code to .pcd file
 	return E;
 }
 //--------------------------------------------------------------------
@@ -72,6 +74,7 @@ Exp* Semantics::add(Exp* l, Exp* r) {
 //expression from the  right expression
 //--------------------------------------------------------------------
 Exp* Semantics::subtract(Exp* l, Exp* r) {
+	cout << "Exp* Semantics::subtract(Exp* l, Exp* r)" << endl;
 	//--------------------------------------------------------------------
 	//Coerce left and right expressions to real if either is integer and
 	//the other is real
@@ -90,7 +93,6 @@ Exp* Semantics::subtract(Exp* l, Exp* r) {
 		P = new PCode("", "sbi", "", "");
 		E = new Exp(l, r, ST.TInteger(), P);
 	}
-	E->Print(pfs); //printing p-code to .pcd file
 	return E;
 }
 //--------------------------------------------------------------------
@@ -98,6 +100,7 @@ Exp* Semantics::subtract(Exp* l, Exp* r) {
 //of the two expressions
 //--------------------------------------------------------------------
 Exp* Semantics::disjunction(Exp* l, Exp* r) {
+	cout << "Exp* Semantics::disjunction(Exp* l, Exp* r)" << endl;
 	//--------------------------------------------------------------------
 	//Both expressions must be Boolean
 	//-------------------------------------------------------------------
@@ -110,7 +113,6 @@ Exp* Semantics::disjunction(Exp* l, Exp* r) {
 	//---------------------------------------------------------------------
 	PCode* P = new PCode("", "ior", "", "");
 	Exp* E = new Exp(l, r, ST.TBoolean(), P);
-	E->Print(pfs); //printing p-code to .pcd file
 	return E;
 }
 //--------------------------------------------------------------------
@@ -118,6 +120,9 @@ Exp* Semantics::disjunction(Exp* l, Exp* r) {
 //--------------------------------------------------------------------
 Exp* Semantics::simple_expression(Exp* simpleexpression, string* addop,
 		Exp* term) {
+	cout
+			<< "Exp* Semantics::simple_expression(Exp* simpleexpression, string* addop, Exp* term)"
+			<< endl;
 	if (*addop == "+")
 		return add(simpleexpression, term);
 	if (*addop == "-")
@@ -127,3 +132,4 @@ Exp* Semantics::simple_expression(Exp* simpleexpression, string* addop,
 	yyerror("Semantic error: invalid addop");
 	return NULL;
 }
+

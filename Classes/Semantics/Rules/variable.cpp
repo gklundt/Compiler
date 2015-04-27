@@ -1,18 +1,18 @@
 #include "../Semantics.h"
 
 Exp* Semantics::variable_symbol(VariableSymbol* V) {
+	cout << "Exp* Semantics::variable_symbol(VariableSymbol* V)" << endl;
 	int ll = ST.LexicalLevel() - V->LexicalLevel();
 	PCode* P = new PCode("", "lda", ll, V->Address());
 	Exp* E = new Exp(V->Type(), P);
-	E->Print(tfs);
 	return E;
 }
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 Exp* Semantics::function_symbol(FunctionSymbol* F) {
+	cout << "Exp* Semantics::function_symbol(FunctionSymbol* F)" << endl;
 	PCode* P = new PCode("", "lda", 0, 0);
 	Exp* E = new Exp(F->ReturnType(), P);
-	E->Print(tfs);
 	return E;
 }
 //-------------------------------------------------------------------------
@@ -20,11 +20,13 @@ Exp* Semantics::function_symbol(FunctionSymbol* F) {
 //variable -> ID
 //-------------------------------------------------------------------------
 Exp* Semantics::variable(string* id) {
+	cout << "Exp* Semantics::variable(string* id)" << endl;
 	Sym* S = ST.Find(*id);
 	if (!S)
 		yyerror("Semantic error - ID cannot be found");
-	if (S)
-		S->Print(tfs, 0);
+	if (S) {
+		bool t = true; // hold this bool for me.
+	}
 	symkind sk = S->Symkind();
 	Exp* E = 0;
 	//List<Exp*>* e = new List<Exp*>;
@@ -41,26 +43,27 @@ Exp* Semantics::variable(string* id) {
 	return E;
 }
 /*
---------------------------------------------------------------------
-Function variable implements the rule
-variable -> ID [ expression ]
-1.  Find id - id must be an array
-2.  load the address of id
-3.  load the value of the expression
-4.  load the value of the smallest possible index value
-5.  subtract the index from the expression
-6.  add the difference to the address of id
+ --------------------------------------------------------------------
+ Function variable implements the rule
+ variable -> ID [ expression ]
+ 1.  Find id - id must be an array
+ 2.  load the address of id
+ 3.  load the value of the expression
+ 4.  load the value of the smallest possible index value
+ 5.  subtract the index from the expression
+ 6.  add the difference to the address of id
 
-                    ixa stride
-                    /
-                   -
-                  / \
+ ixa stride
+ /
+ -
+ / \
   index expression   index lobound
-                /
-           adr(array)
---------------------------------------------------------------------
-*/
+ /
+ adr(array)
+ --------------------------------------------------------------------
+ */
 Exp* Semantics::variable(string* id, Exp* e) {
+	cout << "Exp* Semantics::variable(string* id, Exp* e)" << endl;
 	//------------------------------------------------------------------
 	//------------------------------------------------------------------
 	Sym* S = ST.Find(*id);       //Find the array identifier
@@ -119,6 +122,5 @@ Exp* Semantics::variable(string* id, Exp* e) {
 	P = new PCode("", "ixa", "", stride);
 	Typ* ELT = AT->ElementType();
 	L = new Exp(L, 0, ELT, P);
-	L->Print(tfs);
 	return L;
 }

@@ -1,13 +1,16 @@
 #include "../Semantics.h"
 
 Exp* Semantics::factor_1(string* id) {
+	cout << "Exp* Semantics::factor_1(string* id)" << endl;
 	Sym* S = ST.Find(*id);
 	if (!S)
 		yyerror("Semantic error - ID cannot be found(factor:6)");
-	if (S)
-		S->Print(tfs, 0);
+	if (S) {
+		//S.Print(tfs, 0);
+	}
 	symkind sk = S->Symkind();
 	Exp* E = 0;
+	List<Exp*>* e = new List<Exp*>;
 	switch (sk) {
 	case sk_constant:  //Create an ldc PCode Exp
 		E = factor_1_constant((ConstantSymbol*) S);
@@ -20,38 +23,45 @@ Exp* Semantics::factor_1(string* id) {
 		break;
 	case sk_function:  //Call the function
 		if (S->IsFunctionSymbol())
-			E = factor_1_function((FunctionSymbol*) S);
+			E = UserSubprogram((SubprogramSymbol*) S, e);
+		//E = factor_1_function((FunctionSymbol*) S);
 		else
 			yyerror("Semantic error - ID must be a function ");
 		break;
 	default:
 		break;
 	}
+	//E->Print(tfs);
+	//E->PPrint(pfs);
 	return E;
 }
 
-Exp* Semantics::factor_1_constant(ConstantSymbol* S) {
+Exp * Semantics::factor_1_constant(ConstantSymbol * S) {
+	cout << "Exp * Semantics::factor_1_constant(ConstantSymbol * S)" << endl;
 	Typ* T = S->Type();
 	string cv = S->ConstantValue();
 	PCode* P = new PCode("", "ldc", T->TypeChar(), cv);
 	Exp* E = new Exp(T, P);
-	E->PPrint(pfs); //printing p-code to .pcd file
+	//E->Print(tfs);
+	//E->PPrint(pfs); //printing p-code to .pcd file
 	return E;
 }
 
-Exp* Semantics::factor_1_variable(VariableSymbol* S) {
+Exp * Semantics::factor_1_variable(VariableSymbol * S) {
+	cout << "Exp * Semantics::factor_1_variable(VariableSymbol * S)" << endl;
 	Typ* T = S->Type();
 	string op = "lv" + T->TypeChar();
 	int ll = ST.LexicalLevel() - S->LexicalLevel();
 	int a = S->Address();
 	PCode* P = new PCode("", op, ll, a);
 	Exp* E = new Exp(T, P);
-	E->PPrint(pfs); //printing p-code to .pcd file
+	//E->Print(tfs); //printing p-code to .pcd file
+	//E->PPrint(pfs); //printing p-code to .pcd file
 	return E;
 }
 
-Exp* Semantics::factor_1_function(FunctionSymbol* S) {
-	//ToDo: Code may be incorrect here.  Possible if-brace issue
+Exp * Semantics::factor_1_function(FunctionSymbol * S) {
+	cout << "Exp * Semantics::factor_1_function(FunctionSymbol * S)" << endl;
 	Typ* T = S->Type();
 	Subprogram* F;
 	if (T->IsSubprogram()) {
@@ -68,8 +78,10 @@ Exp* Semantics::factor_1_function(FunctionSymbol* S) {
 	int pc = S->ParameterCount();
 	P = new PCode("", "cup", pc, S->ELabel());
 	E = new Exp(E, 0, RT, P);
-	E->Print(tfs);
+	//E->Print(tfs);
+	//E->PPrint(pfs);
 	return E;
+
 }
 /*
  --------------------------------------------------------------------
@@ -94,12 +106,13 @@ Exp* Semantics::factor_1_function(FunctionSymbol* S) {
  adr(array)
  --------------------------------------------------------------------
  */
-Exp* Semantics::factor_2(string* id, Exp* e) {
+Exp * Semantics::factor_2(string * id, Exp * e) {
+	cout << "Exp * Semantics::factor_2(string * id, Exp * e)" << endl;
 	//------------------------------------------------------------------
 	//------------------------------------------------------------------
 	Sym* S = ST.Find(*id);       //Find the array identifier
 	if (!S)
-		yyerror("Semantic error - ID cannot be found(factor:103)");
+		yyerror("Semantic error - ID cannot be found(factor:104)");
 	if (!S->IsVariableSymbol())
 		yyerror("Semantic error: identifier is not a variable");
 	VariableSymbol* V = (VariableSymbol*) S;
@@ -159,7 +172,8 @@ Exp* Semantics::factor_2(string* id, Exp* e) {
 	string tc = ELT->TypeChar();
 	P = new PCode("", "ind", tc, "");
 	L = new Exp(L, 0, ELT, P);
-	L->Print(tfs);
+	//L->Print(tfs);
+	//L->PPrint(pfs);
 	return L;
 }
 /*
@@ -185,6 +199,8 @@ Exp* Semantics::factor_2(string* id, Exp* e) {
  //--------------------------------------------------------------------
  * */
 Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e) {
+	cout << "Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e)"
+			<< endl;
 	//--------------------------------------------------------------------
 	//Obtain the function type FT, and the return type, RT, of the function
 	//--------------------------------------------------------------------
@@ -210,13 +226,14 @@ Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e) {
 	//Create the cup-pcode and node
 	//--------------------------------------------------------------------
 	int pc = S->ParameterCount();
-	P = new PCode(""                             //Label
-			, "cup"                          //P-Code Op - Call User Procedure
-			, pc                             //Operand 1 - Parameter Count
-			, S->ELabel()                    //Operand 2 - Entry Label
+	P = new PCode(""		//Label
+			, "cup"		//P-Code Op - Call User Procedure
+			, pc		//Operand 1 - Parameter Count
+			, S->ELabel()		//Operand 2 - Entry Label
 			);
 	E = new Exp(E, 0, RT, P);
-	E->Print(tfs);
+	//E->Print(tfs);
+	//E->PPrint(pfs);
 	return E;
 }
 //--------------------------------------------------------------------
@@ -225,7 +242,9 @@ Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e) {
 //if ID is a standard function
 //--------------------------------------------------------------------
 Exp* Semantics::StandardFunction(StandardFunctionSymbol* S, List<Exp*>* e) {
-	//ToDo:  This code was completely commented before.
+	cout
+			<< "Exp* Semantics::StandardFunction(StandardFunctionSymbol* S, List<Exp*>* e)"
+			<< endl;
 	PCode* P;
 	//--------------------------------------------------------------------
 	//All Standard Functions have one and only one argument
@@ -261,6 +280,8 @@ Exp* Semantics::StandardFunction(StandardFunctionSymbol* S, List<Exp*>* e) {
 
 	P = new PCode("", op, "", "");
 	E = new Exp(E, 0, F, P);
+	//E->PPrint(pfs);
+
 	return E;
 
 	return 0;
@@ -270,6 +291,7 @@ Exp* Semantics::StandardFunction(StandardFunctionSymbol* S, List<Exp*>* e) {
 //factor -> ID ( expression_list )
 //--------------------------------------------------------------------
 Exp* Semantics::factor_3(string* id, List<Exp*>* e) {
+	cout << "Exp* Semantics::factor_3(string* id, List<Exp*>* e)" << endl;
 	Sym* S = ST.Find(*id);       //Find the function identifier
 	//--------------------------------------------------------------------
 	//Validate that (1) the identifier is in the symbol table and
@@ -291,50 +313,56 @@ Exp* Semantics::factor_3(string* id, List<Exp*>* e) {
 //Function factor_4 implements the rule
 //factor -> ( expression )
 //--------------------------------------------------------------------
-Exp* Semantics::factor_4(Exp* E) {
+Exp * Semantics::factor_4(Exp * E) {
+	cout << "Exp * Semantics::factor_4(Exp * E)" << endl;
+	//E->PPrint(pfs);
 	return E;
 }
 //--------------------------------------------------------------------
 //Function factor_5 implements the rule
 //factor -> NOT factor 
 //--------------------------------------------------------------------
-Exp* Semantics::factor_5(Exp* factor) {
+Exp * Semantics::factor_5(Exp * factor) {
+	cout << "Exp * Semantics::factor_5(Exp * factor)" << endl;
 	Typ* T = factor->Type();
 	if (T != ST.TBoolean()) {
 		yyerror("Semantic error NOT operand is not Boolean");
 	}
 	PCode* P = new PCode("", "not", "", "");
 	Exp* E = new Exp(factor, 0, T, P);
-	E->PPrint(pfs); //printing p-code to .pcd file
+	//E->PPrint(pfs); //printing p-code to .pcd file
 	return E;
 }
 //--------------------------------------------------------------------
 //Function factor_6 implements the rule
 //factor -> INTLIT 
 //--------------------------------------------------------------------
-Exp* Semantics::factor_6(string* intlit) {
+Exp * Semantics::factor_6(string * intlit) {
+	cout << "Exp * Semantics::factor_6(string * intlit)" << endl;
 	PCode* P = new PCode("", "ldc", "i", *intlit);
 	Exp* E = new Exp(ST.TInteger(), P);
-	E->PPrint(pfs); //printing p-code to .pcd file
+	//E->PPrint(pfs); //printing p-code to .pcd file
 	return E;
 }
 //--------------------------------------------------------------------
 //Function factor_7 implements the rule
 //factor -> REALIT 
 //--------------------------------------------------------------------
-Exp* Semantics::factor_7(string* realit) {
+Exp * Semantics::factor_7(string * realit) {
+	cout << "Exp * Semantics::factor_7(string * realit)" << endl;
 	PCode* P = new PCode("", "ldc", "r", *realit);
 	Exp* E = new Exp(ST.TReal(), P);
-	E->PPrint(pfs); //printing p-code to .pcd file
+	//E->PPrint(pfs); //printing p-code to .pcd file
 	return E;
 }
 //--------------------------------------------------------------------
 //Function factor_8 implements the rule
 //factor -> CHRLIT 
 //--------------------------------------------------------------------
-Exp* Semantics::factor_8(string* chrlit) {
+Exp * Semantics::factor_8(string * chrlit) {
+	cout << "Exp * Semantics::factor_8(string * chrlit)" << endl;
 	PCode* P = new PCode("", "ldc", "c", *chrlit);
 	Exp* E = new Exp(ST.TChar(), P);
-	E->PPrint(pfs); //printing p-code to .pcd file
+	//E->PPrint(pfs); //printing p-code to .pcd file
 	return E;
 }

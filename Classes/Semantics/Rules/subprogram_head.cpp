@@ -4,6 +4,9 @@
 //---------------------------------------------------------------------
 //static Subprogram* ParameterList(List<VariableSymbol*>* VL,Typ* RT)
 Subprogram* Semantics::ParameterList(List<VariableSymbol*>* VL, Typ* RT) {
+	cout
+			<< "Subprogram* Semantics::ParameterList(List<VariableSymbol*>* VL, Typ* RT)"
+			<< endl;
 	List<Typ*>* PL = new List<Typ*>;
 	for (VL->First(); !VL->IsEol(); VL->Next()) {
 		VariableSymbol* S = VL->Member();
@@ -17,6 +20,8 @@ Subprogram* Semantics::ParameterList(List<VariableSymbol*>* VL, Typ* RT) {
 //---------------------------------------------------------------------
 //static void InsertVariables(List<VariableSymbol*>* VL)
 void Semantics::InsertVariables(List<VariableSymbol*>* VL) {
+	cout << "void Semantics::InsertVariables(List<VariableSymbol*>* VL)"
+			<< endl;
 	for (VL->First(); !VL->IsEol(); VL->Next()) {
 		VariableSymbol* S = VL->Member();
 		ST.Insert(S);
@@ -30,12 +35,18 @@ void Semantics::InsertVariables(List<VariableSymbol*>* VL) {
 //4.  Create a new locality.
 //5.  Insert the variable symbols into the symbol table.
 //---------------------------------------------------------------------
-void Semantics::subprogram_head(string id, List<VariableSymbol*>* VL, Typ* RT) {
+//void Semantics::subprogram_head(string id, List<VariableSymbol*>* VL, Typ* RT) {
+SubprogramSymbol* Semantics::subprogram_head(string id,
+		List<VariableSymbol*>* VL, Typ* RT) {
+	cout
+			<< "SubprogramSymbol* Semantics::subprogram_head(string id,List<VariableSymbol*>* VL,Typ* RT)"
+			<< endl;
 	Subprogram* PL = ParameterList(VL, RT);
 	FunctionSymbol* F = new FunctionSymbol(id, PL, ST.LexicalLevel());
 	ST.Insert(F);
 	ST.NewLocality();
 	InsertVariables(VL);
+	return F;
 }
 //---------------------------------------------------------------------
 //subprogram_head->PROCEDURE ID subprogram_parameters SEMICOLON
@@ -45,10 +56,17 @@ void Semantics::subprogram_head(string id, List<VariableSymbol*>* VL, Typ* RT) {
 //4.  Create a new locality.
 //5.  Insert the variable symbols into the symbol table.
 //---------------------------------------------------------------------
-void Semantics::subprogram_head(string id, List<VariableSymbol*>* VL) {
+//void Semantics::subprogram_head(string id, List<VariableSymbol*>* VL) {
+SubprogramSymbol* Semantics::subprogram_head(string id,
+		List<VariableSymbol*>* VL) {
+	cout
+			<< "SubprogramSymbol* Semantics::subprogram_head(string id,List<VariableSymbol*>* VL)"
+			<< endl;
+
 	Subprogram* PL = ParameterList(VL, ST.TVoid());
 	ProcedureSymbol* P = new ProcedureSymbol(id, PL, ST.LexicalLevel());
 	ST.Insert(P);
 	ST.NewLocality();
 	InsertVariables(VL);
+	return P;
 }

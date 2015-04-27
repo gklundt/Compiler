@@ -11,6 +11,7 @@ using namespace std;
 
 #include "../Types/Typ.h"
 #include "symkind.h"
+#include "Label.h"
 
 extern Typ* TypeVoid;
 extern Typ* TypeAddress;
@@ -18,6 +19,7 @@ extern Typ* TypeBoolean;
 extern Typ* TypeChar;
 extern Typ* TypeInteger;
 extern Typ* TypeReal;
+extern Label L;
 
 class Sym {
 	symkind sk;                                   //Symbol classification

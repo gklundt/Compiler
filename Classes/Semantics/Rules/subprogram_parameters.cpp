@@ -3,6 +3,8 @@
 //subprogram_parameters->empty
 //---------------------------------------------------------------------
 List<VariableSymbol*>* Semantics::subprogram_parameters(void) {
+	cout << "List<VariableSymbol*>* Semantics::subprogram_parameters(void)"
+			<< endl;
 	return new List<VariableSymbol*> ;
 }
 //---------------------------------------------------------------------
@@ -10,5 +12,8 @@ List<VariableSymbol*>* Semantics::subprogram_parameters(void) {
 //---------------------------------------------------------------------
 List<VariableSymbol*>* Semantics::subprogram_parameters(
 		List<VariableSymbol*>* V) {
+	cout
+			<< "List<VariableSymbol*>* Semantics::subprogram_parameters( List<VariableSymbol*>* V)"
+			<< endl;
 	return V;
 }

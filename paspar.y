@@ -11,6 +11,7 @@
 #include <string>
 
 #include "Classes/Semantics/Semantics.h"
+#include "Classes/Semantics/Semantics.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ extern unsigned col;
 %}
 
 %union {
+	SubprogramSymbol* subprog;
 	string * token;
 	List<string> *strlist;
 	Typ* typ;
@@ -36,6 +38,8 @@ extern unsigned col;
 	List<Exp*>* explist;
 }
 
+%type <subprog> program_head
+%type <subprog> subprogram_head
 %type <varlist> parameter_list
 %type <varlist> sub_program_parameters
 %type <typ>     type
@@ -113,7 +117,7 @@ extern unsigned col;
 
 program: program_head program_declarations program_body 
 	{sem.tfs << endl << "#001 program --> program_head program_declarations program_body"; 
-	 sem.program() ;}
+	 sem.program($1,$3) ;}
 	;
 program_head: PROGRAM ID program_parameters SEMICOLON 
 	{sem.tfs << endl << "#002 program_head --> PROGRAM ID(" << (*$2) << ") program_parameters ;"; 
@@ -148,14 +152,15 @@ variable_declarations: /*EMPTY*/
 	 sem.variable_declarations($3,$5);}
 	;
 type: standard_type
-	{sem.tfs << endl << "#012 type --> standard_type ";$$=sem.type($1);}
+	{sem.tfs << endl << "#012 type --> standard_type ";
+	 $$=sem.type($1);}
 	| ARRAY LBRACKET INTLIT RANGE INTLIT RBRACKET OF standard_type 
 	{sem.tfs << endl << "#013 type --> ARRAY [ INTLIT(" << (*$3) << ") .. INTLIT(" << (*$5) << ") ] OF standard_type"; 
 	 $$=sem.type(*$3,*$5,$8);}
 	;
 standard_type: ID 
 	{sem.tfs << endl << "#014 standard_type --> ID(" << (*$1) << ")"; 
-	 $$=sem.standard_type((*$1));}
+	 $$=sem.standard_type(*$1);}
 	;
 subprogram_declarations: /*EMPTY*/ 
 	{sem.tfs << endl << "#015 subprogram_declarations --> empty";}
@@ -164,7 +169,7 @@ subprogram_declarations: /*EMPTY*/
 	;
 subprogram_declaration: subprogram_head variable_declarations compound_statement 
 	{sem.tfs << endl << "#017 subprogram_declaration --> subprogram_head variable_declarations compound_statement ";
-	 sem.subprogram_declaration();}
+	 sem.subprogram_declaration($1,$3);}
 	;
 subprogram_head: FUNCTION ID sub_program_parameters COLON standard_type SEMICOLON 
 	{sem.tfs << endl << "#018 subprogram_head --> FUNCTION ID(" << (*$2) << ") sub_program_parameters : standard_type ; ";
@@ -340,6 +345,15 @@ struct FileException {
 
 /* Main is included here and becomes the main entry point for the application */
 /* This seems more simple */
+
+Label L;
+SymbolTable ST;
+
+string test(){
+	string x;
+	return x;
+}
+
 int main (int argc,char *argv[]) {
 
 	char ifn[255];
@@ -348,7 +362,7 @@ int main (int argc,char *argv[]) {
 
 	unsigned pos;
 
-
+cout << test() << endl;
 	switch (argc) {
 		case 1:
 			cout << "Enter the input file name: ";
@@ -393,7 +407,6 @@ int main (int argc,char *argv[]) {
 	printf("Done. Files .pcd and .trc are created. \n");
 	return 0;
 }
-
 void yyerror(string s) {
 	cout << s << endl;
 }

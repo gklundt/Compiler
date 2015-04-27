@@ -1,8 +1,11 @@
 #include "../Semantics.h"
 
 Exp* Semantics::StandardProcedure(StandardProcedureSymbol* S) {
+	cout << "Exp* Semantics::StandardProcedure(StandardProcedureSymbol* S)"
+			<< endl;
 	PCode* P = new PCode("", "csp", "", S->CSPID());
 	Exp* E = new Exp(ST.TVoid(), P);
+	//E->PPrint(pfs);
 	return E;
 }
 //-------------------------------------------------------------------------
@@ -10,6 +13,7 @@ Exp* Semantics::StandardProcedure(StandardProcedureSymbol* S) {
 //procedure_statement: procedure_statement -> ID
 //-------------------------------------------------------------------------
 Exp* Semantics::procedure_statement(string* id) {
+	cout << "Exp* Semantics::procedure_statement(string* id)" << endl;
 	Sym* S = ST.Find(*id);
 	List<Exp*>* e = new List<Exp*>;
 	if (!S)
@@ -28,6 +32,9 @@ Exp* Semantics::procedure_statement(string* id) {
 //when ID is the name of a standard procedure.
 //-------------------------------------------------------------------------
 Exp* Semantics::StandardProcedure(StandardProcedureSymbol* S, List<Exp*>* e) {
+	cout
+			<< "Exp* Semantics::StandardProcedure(StandardProcedureSymbol* S, List<Exp*>* e)"
+			<< endl;
 	PCode* P;
 	Exp* E = 0;
 	//--------------------------------------------------------------------
@@ -43,8 +50,8 @@ Exp* Semantics::StandardProcedure(StandardProcedureSymbol* S, List<Exp*>* e) {
 			, "csp"                        //P-Code Op - Call Standard Procedure
 			, "", S->CSPID());
 	E = new Exp(E, 0, ST.TVoid(), P);
-	E->PPrint(pfs);
-	E->PPrint(tfs);
+	//E->PPrint(pfs);
+	//E->PPrint(tfs);
 	return E;
 }
 //-------------------------------------------------------------------------
@@ -52,6 +59,8 @@ Exp* Semantics::StandardProcedure(StandardProcedureSymbol* S, List<Exp*>* e) {
 //procedure_statement_2: procedure_statement -> ID ( expression_list )
 //-------------------------------------------------------------------------
 Exp* Semantics::procedure_statement(string* id, List<Exp*>* EL) {
+	cout << "Exp* Semantics::procedure_statement(string* id, List<Exp*>* EL)"
+			<< endl;
 	Sym* S = ST.Find(*id);
 	if (!S)
 		yyerror("Semantic error - ID cannot be found");

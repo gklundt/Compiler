@@ -5,13 +5,14 @@
 //statement -> variable := expression
 //-------------------------------------------------------------------------
 List<Exp*>* Semantics::statement(Exp* variable, Exp* expression) {
+	cout << "List<Exp*>* Semantics::statement(Exp* variable, Exp* expression)"
+			<< endl;
 	if (variable->Type() != expression->Type()) {
 		yyerror("Semantic error:Assignment type mismatch");
 	}
 	string tc = expression->Type()->TypeChar();
 	PCode* P = new PCode("", "sti", tc, "");
 	Exp* E = new Exp(variable, expression, ST.TVoid(), P);
-	E->Print(tfs);
 	List<Exp*>* S = new List<Exp*>;
 	S->Insert(E);
 	return S;
@@ -20,6 +21,8 @@ List<Exp*>* Semantics::statement(Exp* variable, Exp* expression) {
 //Function statement implements the rule
 //statement -> procedure_statement
 List<Exp*>* Semantics::statement(Exp* procedure_statement) {
+	cout << "List<Exp*>* Semantics::statement(Exp* procedure_statement)"
+			<< endl;
 	List<Exp*>* L = new List<Exp*>;
 	L->Insert(procedure_statement);
 	return L;
@@ -28,6 +31,8 @@ List<Exp*>* Semantics::statement(Exp* procedure_statement) {
 //Function statement implements the rule
 //statement -> compound_statement
 List<Exp*>* Semantics::statement(List<Exp*>* compound_statement) {
+	cout << "List<Exp*>* Semantics::statement(List<Exp*>* compound_statement)"
+			<< endl;
 	return compound_statement;
 }
 //-------------------------------------------------------------------------
@@ -43,6 +48,9 @@ List<Exp*>* Semantics::statement(List<Exp*>* compound_statement) {
 //-------------------------------------------------------------------------
 List<Exp*>* Semantics::statement(Exp* expression, List<Exp*>* then_statement,
 		List<Exp*>* else_statement) {
+	cout
+			<< "List<Exp*>* Semantics::statement(Exp* expression, List<Exp*>* then_statement, List<Exp*>* else_statement)"
+			<< endl;
 	string elsebegin = L.New();    //Create label that begins the else-statement
 	PCode* P;
 	P = new PCode("", "fjp", "", elsebegin); //Jump to else-statement if expression is false
@@ -77,6 +85,9 @@ List<Exp*>* Semantics::statement(Exp* expression, List<Exp*>* then_statement,
 //    whileend:
 //-------------------------------------------------------------------------
 List<Exp*>* Semantics::statement(Exp* expression, List<Exp*>* body_statement) {
+	cout
+			<< "List<Exp*>* Semantics::statement(Exp* expression, List<Exp*>* body_statement)"
+			<< endl;
 	PCode* P;
 	Exp* E;
 	string whilebegin = L.New();          //Create whilebegin label
@@ -99,3 +110,4 @@ List<Exp*>* Semantics::statement(Exp* expression, List<Exp*>* body_statement) {
 	return WS;
 }
 //--------------------------------------------------------------------
+

@@ -3,6 +3,7 @@
 //Function term -> term * factor
 //--------------------------------------------------------------------
 Exp* Semantics::term_2(Exp* term, Exp* factor) {
+	cout << "Exp* Semantics::term_2(Exp* term, Exp* factor)" << endl;
 	term = CoerceLeftExpressionToReal(term, factor);
 	factor = CoerceRightExpressionToReal(term, factor);
 	//---------------------------------------------------------------------
@@ -15,15 +16,15 @@ Exp* Semantics::term_2(Exp* term, Exp* factor) {
 		E = new Exp(term, factor, ST.TReal(), P);
 	} else {
 		P = new PCode("", "mpi", "", "");
-		E = new Exp(term, factor, ST.TReal(), P);
+		E = new Exp(term, factor, ST.TInteger(), P);
 	}
-	E->Print(pfs); //printing p-code to .pcd file
 	return E;
 }
 //--------------------------------------------------------------------
 //Function term -> term / factor
 //--------------------------------------------------------------------
 Exp* Semantics::term_3(Exp* term, Exp* factor) {
+	cout << "Exp* Semantics::term_3(Exp* term, Exp* factor)" << endl;
 	term = CoerceLeftExpressionToReal(term, factor);
 	factor = CoerceRightExpressionToReal(term, factor);
 	//---------------------------------------------------------------------
@@ -38,13 +39,13 @@ Exp* Semantics::term_3(Exp* term, Exp* factor) {
 	//---------------------------------------------------------------------
 	PCode* P = new PCode("", "dvr", "", "");
 	Exp* E = new Exp(term, factor, ST.TReal(), P);
-	E->Print(pfs); //printing p-code to .pcd file
 	return E;
 }
 //--------------------------------------------------------------------
 //Function term -> term DIV factor
 //--------------------------------------------------------------------
 Exp* Semantics::term_4(Exp* term, Exp* factor) {
+	cout << "Exp* Semantics::term_4(Exp* term, Exp* factor)" << endl;
 	if (!term->IsInteger())
 		yyerror("Semantic error:: the left expression must be integer");
 	if (!factor->IsInteger())
@@ -52,13 +53,13 @@ Exp* Semantics::term_4(Exp* term, Exp* factor) {
 
 	PCode* P = new PCode("", "dvi", "", "");
 	Exp* E = new Exp(term, factor, ST.TInteger(), P);
-	E->Print(pfs); //printing p-code to .pcd file
 	return E;
 }
 //--------------------------------------------------------------------
 //Function term -> term MOD factor
 //--------------------------------------------------------------------
 Exp* Semantics::term_5(Exp* term, Exp* factor) {
+	cout << "Exp* Semantics::term_5(Exp* term, Exp* factor)" << endl;
 	if (!term->IsInteger())
 		yyerror("Semantic error:: the left expression must be integer");
 	if (!factor->IsInteger())
@@ -66,13 +67,13 @@ Exp* Semantics::term_5(Exp* term, Exp* factor) {
 
 	PCode* P = new PCode("", "mod", "", "");
 	Exp* E = new Exp(term, factor, ST.TInteger(), P);
-	E->Print(pfs); //printing p-code to .pcd file
 	return E;
 }
 //--------------------------------------------------------------------
 //Function term -> term AND factor
 //--------------------------------------------------------------------
 Exp* Semantics::term_6(Exp* term, Exp* factor) {
+	cout << "Exp* Semantics::term_6(Exp* term, Exp* factor)" << endl;
 	if (!term->IsBoolean())
 		yyerror("Semantic error:: the left expression must be Boolean");
 	if (!factor->IsBoolean())
@@ -80,7 +81,6 @@ Exp* Semantics::term_6(Exp* term, Exp* factor) {
 
 	PCode* P = new PCode("", "and", "", "");
 	Exp* E = new Exp(term, factor, ST.TBoolean(), P);
-	E->Print(pfs); //printing p-code to .pcd file
 	return E;
 }
 //-------------------------------------------------------------------------
@@ -88,6 +88,7 @@ Exp* Semantics::term_6(Exp* term, Exp* factor) {
 //term -> factor
 //-------------------------------------------------------------------------
 Exp* Semantics::term(Exp* f) {
+	cout << "Exp* Semantics::term(Exp* f)" << endl;
 	return f;
 }
 //-------------------------------------------------------------------------
@@ -95,6 +96,7 @@ Exp* Semantics::term(Exp* f) {
 //term -> term mulop factor
 //-------------------------------------------------------------------------
 Exp* Semantics::term(Exp* t, string* op, Exp* f) {
+	cout << "Exp* Semantics::term(Exp* t, string* op, Exp* f)" << endl;
 	if (*op == "*")
 		return term_2(t, f);
 	if (*op == "/")

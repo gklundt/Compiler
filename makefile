@@ -8,7 +8,7 @@ obj =  Address.o \
 	Void.o \
 	Array.o \
 	Range.o \
-	Classes/Semantics/String.o \
+	String.o \
 	Subprogram.o \
 	Typ.o \
 	ConstantSymbol.o \
@@ -37,25 +37,29 @@ obj =  Address.o \
 	optional_statements.o \
 	parameter_list.o \
 	procedure_statement.o \
-	program_body.o \
 	program.o \
+	program_body.o \
+	program_epilog.o \
 	program_head.o \
 	simple_expression.o \
 	standard_type.o \
 	statement.o \
 	statement_list.o \
 	subprogram_declaration.o \
+	subprogram_epilog.o \
 	subprogram_head.o \
 	subprogram_parameters.o \
+	subprogram_prolog.o \
 	term.o \
 	type.o \
 	usersubprogram.o \
 	variable.o \
 	variable_declarations.o \
 	Exp.o \
+	Height.o \
 	PCode.o \
 	Semantics.o \
-	String.o 
+	Classes/Semantics/String.o
 
 all: ${obj} yl
 	g++ -c paslex.cpp paspar.cpp
@@ -99,6 +103,8 @@ program.o: Classes/Semantics/Rules/program.cpp
 	g++ -c -g Classes/Semantics/Rules/program.cpp
 program_head.o: Classes/Semantics/Rules/program_head.cpp
 	g++ -c -g Classes/Semantics/Rules/program_head.cpp
+program_epilog.o: Classes/Semantics/Rules/program_epilog.cpp
+	g++ -c -g Classes/Semantics/Rules/program_epilog.cpp
 simple_expression.o: Classes/Semantics/Rules/simple_expression.cpp
 	g++ -c -g Classes/Semantics/Rules/simple_expression.cpp
 standard_type.o: Classes/Semantics/Rules/standard_type.cpp
@@ -113,6 +119,10 @@ subprogram_head.o: Classes/Semantics/Rules/subprogram_head.cpp
 	g++ -c -g Classes/Semantics/Rules/subprogram_head.cpp
 subprogram_parameters.o: Classes/Semantics/Rules/subprogram_parameters.cpp
 	g++ -c -g Classes/Semantics/Rules/subprogram_parameters.cpp
+subprogram_prolog.o: Classes/Semantics/Rules/subprogram_prolog.cpp
+	g++ -c -g Classes/Semantics/Rules/subprogram_prolog.cpp
+subprogram_epilog.o: Classes/Semantics/Rules/subprogram_epilog.cpp
+	g++ -c -g Classes/Semantics/Rules/subprogram_epilog.cpp
 term.o: Classes/Semantics/Rules/term.cpp
 	g++ -c -g Classes/Semantics/Rules/term.cpp
 type.o: Classes/Semantics/Rules/type.cpp
@@ -125,6 +135,8 @@ variable_declarations.o: Classes/Semantics/Rules/variable_declarations.cpp
 	g++ -c -g Classes/Semantics/Rules/variable_declarations.cpp
 Semantics.o: Classes/Semantics/Semantics.cpp
 	g++ -c -g Classes/Semantics/Semantics.cpp
+Height.o: Classes/Semantics/Height.cpp
+	g++ -c -g Classes/Semantics/Height.cpp
 Classes/Semantics/String.o: Classes/Semantics/String.cpp
 	g++ -c -g -o Classes/Semantics/String.o Classes/Semantics/String.cpp
 Label.o: Classes/SymbolTable/Label.cpp

@@ -13,9 +13,10 @@ struct TypeException {
 };
 
 Typ* Semantics::standard_type(string id) {
+	cout << "Typ* Semantics::standard_type(string id)" << endl;
 	Sym* s = ST.Find(id);
 	if (!s->IsTypeSymbol())
 		throw TypeException(s);
-	s->Print(tfs, 0);
+	//s->Print(tfs, 0);
 	return s->Type();
 }

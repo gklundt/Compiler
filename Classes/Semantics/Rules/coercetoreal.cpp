@@ -1,6 +1,8 @@
 #include "../Semantics.h"
 
 Exp* Semantics::CoerceLeftExpressionToReal(Exp* LE, Exp* RE) {
+	cout << "Exp* Semantics::CoerceLeftExpressionToReal(Exp* LE, Exp* RE)"
+			<< endl;
 	if (!LE->IsReal() && !LE->IsInteger())
 		yyerror("Semantic error: left expression is not Integer and not Real");
 	if (LE->IsInteger() && RE->IsReal()) {
@@ -12,6 +14,8 @@ Exp* Semantics::CoerceLeftExpressionToReal(Exp* LE, Exp* RE) {
 }
 
 Exp* Semantics::CoerceRightExpressionToReal(Exp* LE, Exp* RE) {
+	cout << "Exp* Semantics::CoerceRightExpressionToReal(Exp* LE, Exp* RE)"
+			<< endl;
 	if (!RE->IsReal() && !RE->IsInteger())
 		yyerror("Semantic error: right expression is not Integer and not Real");
 	if (RE->IsInteger() && LE->IsReal()) {

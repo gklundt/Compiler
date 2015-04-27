@@ -3,5 +3,6 @@
 #include "Classes/Types/Typ.h"
 #include "Classes/Semantics/Exp.h"
 #include "Classes/SymbolTable/Symbols/VariableSymbol.h"
+#include "Classes/SymbolTable/Symbols/SubprogramSymbol.h"
 
 
