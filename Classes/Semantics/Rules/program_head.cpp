@@ -1,13 +1,13 @@
 #include "../Semantics.h"
 
 SubprogramSymbol* Semantics::program_head(string id) {
-	cout << "SubprogramSymbol* Semantics::program_head(string id)" << endl;
+
 	List<VariableSymbol*>* VL = new List<VariableSymbol*>;
-	Subprogram* PL = ParameterList(VL, ST.TVoid());
+	Subprogram* PL = ParameterList(VL, SymbolTable::instance()->TVoid());
 	ProcedureSymbol* P = new ProcedureSymbol(id, PL, 0);
 
-	ST.Insert(P);
-	ST.NewLocality();
+	SymbolTable::instance()->Insert(P);
+	SymbolTable::instance()->NewLocality();
 	return P;
 }
 //void Semantics::program_head(string id)

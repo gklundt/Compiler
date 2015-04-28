@@ -1,8 +1,7 @@
 #include "../Semantics.h"
 
 Exp* Semantics::variable_symbol(VariableSymbol* V) {
-	cout << "Exp* Semantics::variable_symbol(VariableSymbol* V)" << endl;
-	int ll = ST.LexicalLevel() - V->LexicalLevel();
+	int ll = SymbolTable::instance()->LexicalLevel() - V->LexicalLevel();
 	PCode* P = new PCode("", "lda", ll, V->Address());
 	Exp* E = new Exp(V->Type(), P);
 	return E;
@@ -10,7 +9,6 @@ Exp* Semantics::variable_symbol(VariableSymbol* V) {
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 Exp* Semantics::function_symbol(FunctionSymbol* F) {
-	cout << "Exp* Semantics::function_symbol(FunctionSymbol* F)" << endl;
 	PCode* P = new PCode("", "lda", 0, 0);
 	Exp* E = new Exp(F->ReturnType(), P);
 	return E;
@@ -20,8 +18,7 @@ Exp* Semantics::function_symbol(FunctionSymbol* F) {
 //variable -> ID
 //-------------------------------------------------------------------------
 Exp* Semantics::variable(string* id) {
-	cout << "Exp* Semantics::variable(string* id)" << endl;
-	Sym* S = ST.Find(*id);
+	Sym* S = SymbolTable::instance()->Find(*id);
 	if (!S)
 		yyerror("Semantic error - ID cannot be found");
 	if (S) {
@@ -63,10 +60,9 @@ Exp* Semantics::variable(string* id) {
  --------------------------------------------------------------------
  */
 Exp* Semantics::variable(string* id, Exp* e) {
-	cout << "Exp* Semantics::variable(string* id, Exp* e)" << endl;
 	//------------------------------------------------------------------
 	//------------------------------------------------------------------
-	Sym* S = ST.Find(*id);       //Find the array identifier
+	Sym* S = SymbolTable::instance()->Find(*id);     //Find the array identifier
 	if (!S)
 		yyerror("Semantic error - ID cannot be found");
 	if (!S->IsVariableSymbol())
@@ -93,10 +89,10 @@ Exp* Semantics::variable(string* id, Exp* e) {
 	//------------------------------------------------------------------
 	//Load the base address of the array.
 	//------------------------------------------------------------------
-	int ll = ST.LexicalLevel() - V->LexicalLevel();
+	int ll = SymbolTable::instance()->LexicalLevel() - V->LexicalLevel();
 	int a = V->Address();
 	P = new PCode("", "lda", ll, a);
-	R = new Exp(ST.TAddress(), P);
+	R = new Exp(SymbolTable::instance()->TAddress(), P);
 	//------------------------------------------------------------------
 	//Append R on the left-most side of the index expression e
 	//------------------------------------------------------------------
@@ -112,9 +108,9 @@ Exp* Semantics::variable(string* id, Exp* e) {
 	Range* IT = AT->IndexType();
 	string lo = IT->LoBound();
 	P = new PCode("", "ldc", "i", lo);
-	R = new Exp(ST.TInteger(), P);
+	R = new Exp(SymbolTable::instance()->TInteger(), P);
 	P = new PCode("", "sbi", "", "");
-	L = new Exp(e, R, ST.TInteger(), P);
+	L = new Exp(e, R, SymbolTable::instance()->TInteger(), P);
 	//------------------------------------------------------------------
 	//Next, obtain the stride, the distance between elements of the array
 	//------------------------------------------------------------------

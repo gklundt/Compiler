@@ -27,8 +27,6 @@
  -------------------------------------------------------------------------
  */
 Exp* Semantics::UserSubprogram(SubprogramSymbol* S, List<Exp*>* e) {
-	cout << "Exp* Semantics::UserSubprogram(SubprogramSymbol* S, List<Exp*>* e)"
-			<< endl;
 	//--------------------------------------------------------------------
 	//Obtain the function type FT, and the return type, RT, of the function
 	//--------------------------------------------------------------------
@@ -38,9 +36,9 @@ Exp* Semantics::UserSubprogram(SubprogramSymbol* S, List<Exp*>* e) {
 	//--------------------------------------------------------------------
 	//Put a mark stack, mst, at the bottom of the list.
 	//--------------------------------------------------------------------
-	int ll = ST.LexicalLevel() - S->LexicalLevel();
+	int ll = SymbolTable::instance()->LexicalLevel() - S->LexicalLevel();
 	P = new PCode("", "mst", ll, "");
-	E = new Exp(ST.TVoid(), P);
+	E = new Exp(SymbolTable::instance()->TVoid(), P);
 	//--------------------------------------------------------------------
 	//Traverse the list of argument-expressions and create an arg-pcode
 	//for each expression
@@ -48,7 +46,7 @@ Exp* Semantics::UserSubprogram(SubprogramSymbol* S, List<Exp*>* e) {
 	for (e->First(); !e->IsEol(); e->Next()) {
 		Exp* A = e->Member();
 		P = new PCode("", "arg", "", "");
-		E = new Exp(E, A, ST.TVoid(), P);
+		E = new Exp(E, A, SymbolTable::instance()->TVoid(), P);
 	}
 	//--------------------------------------------------------------------
 	//Create the cup-pcode and node

@@ -1,7 +1,5 @@
 #include "Semantics.h"
 
-Semantics::Semantics() {
-}
 
 Semantics::~Semantics() {
 }

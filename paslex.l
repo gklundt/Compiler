@@ -155,7 +155,7 @@ int tkn_handler(int tkn_code, string tkn_name ){
 	/* Print the token to file */
 	//fprintf (yyout, "Token:Code=%d Name=%10s line=%4u col=%4u Spelling=\"%s\"\n", tkn_code, tkn_name.c_str(), line, col, yytext ); 
 	//printf (	"Token:Code=%d Name=%10s line=%4u col=%4u Spelling=\"%s\"\n", tkn_code, tkn_name.c_str(), line, col, yytext ); 
-	sem.tfs << endl << "Token:Code=" << tkn_code << " Name=" << tkn_name << " line=" << line << " col=" << col << " Spelling=\"" << yytext << "\""; 
+	Semantics::instance()->tfs << endl << "Token:Code=" << tkn_code << " Name=" << tkn_name << " line=" << line << " col=" << col << " Spelling=\"" << yytext << "\""; 
 	/* Increment the column number*/
 	col+=yyleng;
 

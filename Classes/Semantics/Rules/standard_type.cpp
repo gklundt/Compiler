@@ -13,8 +13,7 @@ struct TypeException {
 };
 
 Typ* Semantics::standard_type(string id) {
-	cout << "Typ* Semantics::standard_type(string id)" << endl;
-	Sym* s = ST.Find(id);
+	Sym* s = SymbolTable::instance()->Find(id);
 	if (!s->IsTypeSymbol())
 		throw TypeException(s);
 	//s->Print(tfs, 0);

@@ -10,11 +10,23 @@
 using namespace std;
 
 class Label {
-   int label;
-   int width;
-   char fillchar;
+
+	int label;
+	int width;
+	char fillchar;
+	static Label *s_instance;
+
+	Label(int w = 5, char f = '0') {
+		label = 1;
+		width = w;
+		fillchar = f;
+	}
+
 public:
-   Label(int w=5,char f='0');
-   string New(void);
+
+	string New();
+	int iNew();
+	static Label *instance();
+
 };
 #endif

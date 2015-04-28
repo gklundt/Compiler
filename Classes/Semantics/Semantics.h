@@ -27,8 +27,18 @@ extern Label L;
 extern SymbolTable ST;
 
 class Semantics {
+
+	static Semantics *s_instance;
+	Semantics() {
+	}
+
 public:
-	Semantics();
+
+	static Semantics *instance() {
+		if (!s_instance)
+			s_instance = new Semantics;
+		return s_instance;
+	}
 	virtual ~Semantics();
 
 	ofstream pfs;

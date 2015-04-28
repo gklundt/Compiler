@@ -39,8 +39,16 @@ class SymbolTable: public LocalityStack {
 	Typ* tboolean;            //Points to standard type boolean
 	Typ* tstring;             //Points to standard type string
 
+	static SymbolTable *s_instance;
+
+	SymbolTable() {
+		NewLocality();
+		Standard();
+	}
+	//Creates locality 0 and pushes it on the locality Stack
+
 public:
-	SymbolTable();      //Creates locality 0 and pushes it on the locality Stack
+
 	~SymbolTable();           //SymbolTable post processing
 
 	void Standard(void);
@@ -58,6 +66,12 @@ public:
 	Typ* TInteger(void);      //Returns standard type integer
 	Typ* TReal(void);         //Returns standard type real
 	Typ* TBoolean(void);      //Returns standard type Boolean
+
+	static SymbolTable *instance() {
+		if (!s_instance)
+			s_instance = new SymbolTable;
+		return s_instance;
+	}
 
 };
 

@@ -9,4 +9,5 @@ FunctionSymbol::FunctionSymbol(string id, Typ* t, int ll) :
 void FunctionSymbol::Print(ostream& o, int indent) {
 	SubprogramSymbol::Print(o, indent);
 }
-FunctionSymbol::~FunctionSymbol(){}
+FunctionSymbol::~FunctionSymbol() {
+}

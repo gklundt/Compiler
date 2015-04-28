@@ -26,7 +26,6 @@ using namespace std;
 //Function String is a utility that converts integers to strings.
 //-------------------------------------------------------------------------
 string String(int i) {
-	cout << "string String(int i)" << endl;
 	ostringstream o;
 	o << i;
 	return o.str();

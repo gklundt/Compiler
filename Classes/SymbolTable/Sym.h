@@ -25,6 +25,7 @@ class Sym {
 	symkind sk;                                   //Symbol classification
 	string id;                                    //Symbol identifier
 	Typ* t;                                       //Symbol type
+
 public:
 
 	Sym(symkind k, const char* i, Typ* u);          //Constructor

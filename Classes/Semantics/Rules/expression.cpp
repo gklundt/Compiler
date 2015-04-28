@@ -1,16 +1,13 @@
 #include "../Semantics.h"
 
 Exp* Semantics::expression(Exp* simple_expression) {
-	cout << "Exp* Semantics::expression(Exp* simple_expression)" << endl;
 	return simple_expression;
 }
 
 Exp* Semantics::expression(Exp* LE, Exp* RE, string relop) {
-	cout << "Exp* Semantics::expression(Exp* LE, Exp* RE, string relop)"
-			<< endl;
 	Typ* LT = LE->Type();
 	Typ* RT = RE->Type();
-	Typ* B = ST.TBoolean();
+	Typ* B = SymbolTable::instance()->TBoolean();
 	if (LT != RT)
 		yyerror("Semantic Error:unequal left and right types.");
 	string typechar = LT->TypeChar();
@@ -21,9 +18,6 @@ Exp* Semantics::expression(Exp* LE, Exp* RE, string relop) {
 
 Exp* Semantics::expression(Exp* left_simple_expression, string* relop,
 		Exp* right_simple_expression) {
-	cout
-			<< "Exp* Semantics::expression(Exp* left_simple_expression, string* relop, Exp* right_simple_expression)"
-			<< endl;
 	if (*relop == "=")
 		return expression(left_simple_expression, right_simple_expression,
 				"equ");

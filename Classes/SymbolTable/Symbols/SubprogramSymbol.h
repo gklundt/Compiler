@@ -11,9 +11,10 @@ extern Label L;
 
 class SubprogramSymbol: public Sym {
 	int lexicallevel;                             //Lexical level of subprogram
-	string elabel;                                //Entry label
-	string splabel;                               //Stack pointer label
-	string eplabel;                               //Extreme pointer label
+	int elabel;                                //Entry label
+	int splabel;                               //Stack pointer label
+	int eplabel;                                //Entry label
+
 public:
 	SubprogramSymbol(symkind sk, string id, Typ* t, int ll);
 	void Print(ostream& o, int indent);

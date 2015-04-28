@@ -4,9 +4,6 @@
 //---------------------------------------------------------------------
 //static Subprogram* ParameterList(List<VariableSymbol*>* VL,Typ* RT)
 Subprogram* Semantics::ParameterList(List<VariableSymbol*>* VL, Typ* RT) {
-	cout
-			<< "Subprogram* Semantics::ParameterList(List<VariableSymbol*>* VL, Typ* RT)"
-			<< endl;
 	List<Typ*>* PL = new List<Typ*>;
 	for (VL->First(); !VL->IsEol(); VL->Next()) {
 		VariableSymbol* S = VL->Member();
@@ -20,11 +17,9 @@ Subprogram* Semantics::ParameterList(List<VariableSymbol*>* VL, Typ* RT) {
 //---------------------------------------------------------------------
 //static void InsertVariables(List<VariableSymbol*>* VL)
 void Semantics::InsertVariables(List<VariableSymbol*>* VL) {
-	cout << "void Semantics::InsertVariables(List<VariableSymbol*>* VL)"
-			<< endl;
 	for (VL->First(); !VL->IsEol(); VL->Next()) {
 		VariableSymbol* S = VL->Member();
-		ST.Insert(S);
+		SymbolTable::instance()->Insert(S);
 	}
 }
 //---------------------------------------------------------------------
@@ -38,13 +33,11 @@ void Semantics::InsertVariables(List<VariableSymbol*>* VL) {
 //void Semantics::subprogram_head(string id, List<VariableSymbol*>* VL, Typ* RT) {
 SubprogramSymbol* Semantics::subprogram_head(string id,
 		List<VariableSymbol*>* VL, Typ* RT) {
-	cout
-			<< "SubprogramSymbol* Semantics::subprogram_head(string id,List<VariableSymbol*>* VL,Typ* RT)"
-			<< endl;
 	Subprogram* PL = ParameterList(VL, RT);
-	FunctionSymbol* F = new FunctionSymbol(id, PL, ST.LexicalLevel());
-	ST.Insert(F);
-	ST.NewLocality();
+	FunctionSymbol* F = new FunctionSymbol(id, PL,
+			SymbolTable::instance()->LexicalLevel());
+	SymbolTable::instance()->Insert(F);
+	SymbolTable::instance()->NewLocality();
 	InsertVariables(VL);
 	return F;
 }
@@ -59,14 +52,12 @@ SubprogramSymbol* Semantics::subprogram_head(string id,
 //void Semantics::subprogram_head(string id, List<VariableSymbol*>* VL) {
 SubprogramSymbol* Semantics::subprogram_head(string id,
 		List<VariableSymbol*>* VL) {
-	cout
-			<< "SubprogramSymbol* Semantics::subprogram_head(string id,List<VariableSymbol*>* VL)"
-			<< endl;
 
-	Subprogram* PL = ParameterList(VL, ST.TVoid());
-	ProcedureSymbol* P = new ProcedureSymbol(id, PL, ST.LexicalLevel());
-	ST.Insert(P);
-	ST.NewLocality();
+	Subprogram* PL = ParameterList(VL, SymbolTable::instance()->TVoid());
+	ProcedureSymbol* P = new ProcedureSymbol(id, PL,
+			SymbolTable::instance()->LexicalLevel());
+	SymbolTable::instance()->Insert(P);
+	SymbolTable::instance()->NewLocality();
 	InsertVariables(VL);
 	return P;
 }

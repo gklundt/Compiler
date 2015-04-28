@@ -1,8 +1,5 @@
 #include "../Semantics.h"
 void Semantics::program(SubprogramSymbol* S, List<Exp*>* compound_statement) {
-	cout
-			<< "void Semantics::program(SubprogramSymbol* S, List<Exp*>* compound_statement)"
-			<< endl;
 	//-----------------------------------------------------------------------
 	//First, verify that all is well in the trace file for the prolog,
 	//compound_statement, and the epilog.

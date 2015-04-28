@@ -14,14 +14,15 @@ Locality::Locality(int ll) :
 int Locality::Offset(void) {
 	return offset;
 }
-int Locality::Offset(int size, int alignment) { //-------------------------------------------------------------------
-												//Variables and fields must be aligned on the boundaries given by
-												//their types.  For example, floating point values having type
-												//real must be aligned on 64-bit boundaries.
-												//-------------------------------------------------------------------
-												//Determine if the current offset can be used to allocate the
-												//input variable or field.
-												//-------------------------------------------------------------------
+int Locality::Offset(int size, int alignment) {
+	//-------------------------------------------------------------------
+	//Variables and fields must be aligned on the boundaries given by
+	//their types.  For example, floating point values having type
+	//real must be aligned on 64-bit boundaries.
+	//-------------------------------------------------------------------
+	//Determine if the current offset can be used to allocate the
+	//input variable or field.
+	//-------------------------------------------------------------------
 	if (alignment == 0)
 		throw AlignmentException(alignment);
 	int remainder = offset % alignment;

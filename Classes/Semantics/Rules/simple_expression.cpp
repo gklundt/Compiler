@@ -5,7 +5,6 @@
 //simple_expression -> term
 //-------------------------------------------------------------------------
 Exp* Semantics::simple_expression(Exp* term) {
-	cout << "Exp* Semantics::simple_expression(Exp* term)" << endl;
 	return term;
 }
 //--------------------------------------------------------------------
@@ -13,8 +12,6 @@ Exp* Semantics::simple_expression(Exp* term) {
 //--------------------------------------------------------------------
 
 Exp* Semantics::simple_expression(string* sign, Exp* term) {
-	cout << "Exp* Semantics::simple_expression(string* sign, Exp* term)"
-			<< endl;
 	//------------------------------------------------------------------
 	//Emit a semantic error if the term has neither type integer or real
 	//------------------------------------------------------------------
@@ -36,10 +33,10 @@ Exp* Semantics::simple_expression(string* sign, Exp* term) {
 	//------------------------------------------------------------------
 	if (term->IsInteger()) {
 		P = new PCode("", "ngi", "", "");
-		E = new Exp(term, 0, ST.TInteger(), P);
+		E = new Exp(term, 0, SymbolTable::instance()->TInteger(), P);
 	} else {
 		P = new PCode("", "ngr", "", "");
-		E = new Exp(term, 0, ST.TReal(), P);
+		E = new Exp(term, 0, SymbolTable::instance()->TReal(), P);
 	}
 	return E;
 }
@@ -48,7 +45,6 @@ Exp* Semantics::simple_expression(string* sign, Exp* term) {
 //expressions
 //--------------------------------------------------------------------
 Exp* Semantics::add(Exp* l, Exp* r) {
-	cout << "Exp* Semantics::add(Exp* l, Exp* r)" << endl;
 	//--------------------------------------------------------------------
 	//Coerce left and right expressions to real if either is integer and
 	//the other is real
@@ -62,10 +58,10 @@ Exp* Semantics::add(Exp* l, Exp* r) {
 	Exp* E;
 	if (l->IsReal() || r->IsReal()) {
 		P = new PCode("", "adr", "", "");
-		E = new Exp(l, r, ST.TReal(), P);
+		E = new Exp(l, r, SymbolTable::instance()->TReal(), P);
 	} else {
 		P = new PCode("", "adi", "", "");
-		E = new Exp(l, r, ST.TInteger(), P);
+		E = new Exp(l, r, SymbolTable::instance()->TInteger(), P);
 	}
 	return E;
 }
@@ -74,7 +70,6 @@ Exp* Semantics::add(Exp* l, Exp* r) {
 //expression from the  right expression
 //--------------------------------------------------------------------
 Exp* Semantics::subtract(Exp* l, Exp* r) {
-	cout << "Exp* Semantics::subtract(Exp* l, Exp* r)" << endl;
 	//--------------------------------------------------------------------
 	//Coerce left and right expressions to real if either is integer and
 	//the other is real
@@ -88,10 +83,10 @@ Exp* Semantics::subtract(Exp* l, Exp* r) {
 	Exp* E;
 	if (l->IsReal() || r->IsReal()) {
 		P = new PCode("", "sbr", "", "");
-		E = new Exp(l, r, ST.TReal(), P);
+		E = new Exp(l, r, SymbolTable::instance()->TReal(), P);
 	} else {
 		P = new PCode("", "sbi", "", "");
-		E = new Exp(l, r, ST.TInteger(), P);
+		E = new Exp(l, r, SymbolTable::instance()->TInteger(), P);
 	}
 	return E;
 }
@@ -100,7 +95,6 @@ Exp* Semantics::subtract(Exp* l, Exp* r) {
 //of the two expressions
 //--------------------------------------------------------------------
 Exp* Semantics::disjunction(Exp* l, Exp* r) {
-	cout << "Exp* Semantics::disjunction(Exp* l, Exp* r)" << endl;
 	//--------------------------------------------------------------------
 	//Both expressions must be Boolean
 	//-------------------------------------------------------------------
@@ -112,7 +106,7 @@ Exp* Semantics::disjunction(Exp* l, Exp* r) {
 	//disjunction
 	//---------------------------------------------------------------------
 	PCode* P = new PCode("", "ior", "", "");
-	Exp* E = new Exp(l, r, ST.TBoolean(), P);
+	Exp* E = new Exp(l, r, SymbolTable::instance()->TBoolean(), P);
 	return E;
 }
 //--------------------------------------------------------------------
@@ -120,9 +114,6 @@ Exp* Semantics::disjunction(Exp* l, Exp* r) {
 //--------------------------------------------------------------------
 Exp* Semantics::simple_expression(Exp* simpleexpression, string* addop,
 		Exp* term) {
-	cout
-			<< "Exp* Semantics::simple_expression(Exp* simpleexpression, string* addop, Exp* term)"
-			<< endl;
 	if (*addop == "+")
 		return add(simpleexpression, term);
 	if (*addop == "-")

@@ -1,8 +1,7 @@
 #include "../Semantics.h"
 
 Exp* Semantics::factor_1(string* id) {
-	cout << "Exp* Semantics::factor_1(string* id)" << endl;
-	Sym* S = ST.Find(*id);
+	Sym* S = SymbolTable::instance()->Find(*id);
 	if (!S)
 		yyerror("Semantic error - ID cannot be found(factor:6)");
 	if (S) {
@@ -37,7 +36,6 @@ Exp* Semantics::factor_1(string* id) {
 }
 
 Exp * Semantics::factor_1_constant(ConstantSymbol * S) {
-	cout << "Exp * Semantics::factor_1_constant(ConstantSymbol * S)" << endl;
 	Typ* T = S->Type();
 	string cv = S->ConstantValue();
 	PCode* P = new PCode("", "ldc", T->TypeChar(), cv);
@@ -48,10 +46,9 @@ Exp * Semantics::factor_1_constant(ConstantSymbol * S) {
 }
 
 Exp * Semantics::factor_1_variable(VariableSymbol * S) {
-	cout << "Exp * Semantics::factor_1_variable(VariableSymbol * S)" << endl;
 	Typ* T = S->Type();
 	string op = "lv" + T->TypeChar();
-	int ll = ST.LexicalLevel() - S->LexicalLevel();
+	int ll = SymbolTable::instance()->LexicalLevel() - S->LexicalLevel();
 	int a = S->Address();
 	PCode* P = new PCode("", op, ll, a);
 	Exp* E = new Exp(T, P);
@@ -61,7 +58,6 @@ Exp * Semantics::factor_1_variable(VariableSymbol * S) {
 }
 
 Exp * Semantics::factor_1_function(FunctionSymbol * S) {
-	cout << "Exp * Semantics::factor_1_function(FunctionSymbol * S)" << endl;
 	Typ* T = S->Type();
 	Subprogram* F;
 	if (T->IsSubprogram()) {
@@ -71,9 +67,9 @@ Exp * Semantics::factor_1_function(FunctionSymbol * S) {
 	PCode* P;
 
 	Exp* E;
-	int ll = ST.LexicalLevel() - S->LexicalLevel();
+	int ll = SymbolTable::instance()->LexicalLevel() - S->LexicalLevel();
 	P = new PCode("", "mst", ll, "");
-	E = new Exp(ST.TVoid(), P);
+	E = new Exp(SymbolTable::instance()->TVoid(), P);
 
 	int pc = S->ParameterCount();
 	P = new PCode("", "cup", pc, S->ELabel());
@@ -107,10 +103,9 @@ Exp * Semantics::factor_1_function(FunctionSymbol * S) {
  --------------------------------------------------------------------
  */
 Exp * Semantics::factor_2(string * id, Exp * e) {
-	cout << "Exp * Semantics::factor_2(string * id, Exp * e)" << endl;
 	//------------------------------------------------------------------
 	//------------------------------------------------------------------
-	Sym* S = ST.Find(*id);       //Find the array identifier
+	Sym* S = SymbolTable::instance()->Find(*id);     //Find the array identifier
 	if (!S)
 		yyerror("Semantic error - ID cannot be found(factor:104)");
 	if (!S->IsVariableSymbol())
@@ -137,10 +132,10 @@ Exp * Semantics::factor_2(string * id, Exp * e) {
 	//------------------------------------------------------------------
 	//Load the base address of the array.
 	//------------------------------------------------------------------
-	int ll = ST.LexicalLevel() - V->LexicalLevel();
+	int ll = SymbolTable::instance()->LexicalLevel() - V->LexicalLevel();
 	int a = V->Address();
 	P = new PCode("", "lda", ll, a);
-	R = new Exp(ST.TAddress(), P);
+	R = new Exp(SymbolTable::instance()->TAddress(), P);
 	//------------------------------------------------------------------
 	//Append R on the left-most side of the index expression e
 	//------------------------------------------------------------------
@@ -156,15 +151,15 @@ Exp * Semantics::factor_2(string * id, Exp * e) {
 	Range* IT = AT->IndexType();
 	string lo = IT->LoBound();
 	P = new PCode("", "ldc", "i", lo);
-	R = new Exp(ST.TInteger(), P);
+	R = new Exp(SymbolTable::instance()->TInteger(), P);
 	P = new PCode("", "sbi", "", "");
-	L = new Exp(e, R, ST.TInteger(), P);
+	L = new Exp(e, R, SymbolTable::instance()->TInteger(), P);
 	//------------------------------------------------------------------
 	//Next, obtain the stride, the distance between elements of the array
 	//------------------------------------------------------------------
 	int stride = AT->Stride();
 	P = new PCode("", "ixa", "", stride);
-	L = new Exp(L, 0, ST.TAddress(), P);
+	L = new Exp(L, 0, SymbolTable::instance()->TAddress(), P);
 	//------------------------------------------------------------------
 	//Employ the load-indirect, ind, p-code to fetch the element
 	//------------------------------------------------------------------
@@ -199,8 +194,6 @@ Exp * Semantics::factor_2(string * id, Exp * e) {
  //--------------------------------------------------------------------
  * */
 Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e) {
-	cout << "Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e)"
-			<< endl;
 	//--------------------------------------------------------------------
 	//Obtain the function type FT, and the return type, RT, of the function
 	//--------------------------------------------------------------------
@@ -210,9 +203,9 @@ Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e) {
 	//--------------------------------------------------------------------
 	//Put a mark stack, mst, at the bottom of the list.
 	//--------------------------------------------------------------------
-	int ll = ST.LexicalLevel() - S->LexicalLevel();
+	int ll = SymbolTable::instance()->LexicalLevel() - S->LexicalLevel();
 	P = new PCode("", "mst", ll, "");
-	E = new Exp(ST.TVoid(), P);
+	E = new Exp(SymbolTable::instance()->TVoid(), P);
 	//--------------------------------------------------------------------
 	//Traverse the list of argument-expressions and create an arg-pcode
 	//for each expression
@@ -220,7 +213,7 @@ Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e) {
 	for (e->First(); !e->IsEol(); e->Next()) {
 		Exp* A = e->Member();
 		P = new PCode("", "arg", "", "");
-		E = new Exp(E, A, ST.TVoid(), P);
+		E = new Exp(E, A, SymbolTable::instance()->TVoid(), P);
 	}
 	//--------------------------------------------------------------------
 	//Create the cup-pcode and node
@@ -242,9 +235,6 @@ Exp* Semantics::UserFunction(FunctionSymbol* S, List<Exp*>* e) {
 //if ID is a standard function
 //--------------------------------------------------------------------
 Exp* Semantics::StandardFunction(StandardFunctionSymbol* S, List<Exp*>* e) {
-	cout
-			<< "Exp* Semantics::StandardFunction(StandardFunctionSymbol* S, List<Exp*>* e)"
-			<< endl;
 	PCode* P;
 	//--------------------------------------------------------------------
 	//All Standard Functions have one and only one argument
@@ -257,25 +247,25 @@ Exp* Semantics::StandardFunction(StandardFunctionSymbol* S, List<Exp*>* e) {
 	if (op == "dec" || op == "inc")
 		F = A;
 	if (op == "rnd" || op == "trc")
-		F = ST.TInteger();
+		F = SymbolTable::instance()->TInteger();
 	if (op == "chr")
-		F = ST.TChar();
+		F = SymbolTable::instance()->TChar();
 	if (op == "ord")
-		F = ST.TInteger();
+		F = SymbolTable::instance()->TInteger();
 	if ((op == "sqt"))
-		F = ST.TReal();
-	if ((op == "abs") && (A == ST.TInteger()))
-		F = ST.TInteger();
-	if ((op == "abs") && (A == ST.TReal()))
-		F = ST.TReal();
+		F = SymbolTable::instance()->TReal();
+	if ((op == "abs") && (A == SymbolTable::instance()->TInteger()))
+		F = SymbolTable::instance()->TInteger();
+	if ((op == "abs") && (A == SymbolTable::instance()->TReal()))
+		F = SymbolTable::instance()->TReal();
 
-	if ((op == "abs") && (A == ST.TInteger()))
+	if ((op == "abs") && (A == SymbolTable::instance()->TInteger()))
 		op = "abi";
-	if ((op == "abs") && (A == ST.TReal()))
+	if ((op == "abs") && (A == SymbolTable::instance()->TReal()))
 		op = "abr";
-	if ((op == "sqt") && (A == ST.TInteger()))
+	if ((op == "sqt") && (A == SymbolTable::instance()->TInteger()))
 		op = "sqi";
-	if ((op == "sqt") && (A == ST.TReal()))
+	if ((op == "sqt") && (A == SymbolTable::instance()->TReal()))
 		op = "sqr";
 
 	P = new PCode("", op, "", "");
@@ -291,8 +281,7 @@ Exp* Semantics::StandardFunction(StandardFunctionSymbol* S, List<Exp*>* e) {
 //factor -> ID ( expression_list )
 //--------------------------------------------------------------------
 Exp* Semantics::factor_3(string* id, List<Exp*>* e) {
-	cout << "Exp* Semantics::factor_3(string* id, List<Exp*>* e)" << endl;
-	Sym* S = ST.Find(*id);       //Find the function identifier
+	Sym* S = SymbolTable::instance()->Find(*id);  //Find the function identifier
 	//--------------------------------------------------------------------
 	//Validate that (1) the identifier is in the symbol table and
 	//(2) that the identifier is a function symbol
@@ -314,7 +303,6 @@ Exp* Semantics::factor_3(string* id, List<Exp*>* e) {
 //factor -> ( expression )
 //--------------------------------------------------------------------
 Exp * Semantics::factor_4(Exp * E) {
-	cout << "Exp * Semantics::factor_4(Exp * E)" << endl;
 	//E->PPrint(pfs);
 	return E;
 }
@@ -323,9 +311,8 @@ Exp * Semantics::factor_4(Exp * E) {
 //factor -> NOT factor 
 //--------------------------------------------------------------------
 Exp * Semantics::factor_5(Exp * factor) {
-	cout << "Exp * Semantics::factor_5(Exp * factor)" << endl;
 	Typ* T = factor->Type();
-	if (T != ST.TBoolean()) {
+	if (T != SymbolTable::instance()->TBoolean()) {
 		yyerror("Semantic error NOT operand is not Boolean");
 	}
 	PCode* P = new PCode("", "not", "", "");
@@ -338,9 +325,8 @@ Exp * Semantics::factor_5(Exp * factor) {
 //factor -> INTLIT 
 //--------------------------------------------------------------------
 Exp * Semantics::factor_6(string * intlit) {
-	cout << "Exp * Semantics::factor_6(string * intlit)" << endl;
 	PCode* P = new PCode("", "ldc", "i", *intlit);
-	Exp* E = new Exp(ST.TInteger(), P);
+	Exp* E = new Exp(SymbolTable::instance()->TInteger(), P);
 	//E->PPrint(pfs); //printing p-code to .pcd file
 	return E;
 }
@@ -349,9 +335,8 @@ Exp * Semantics::factor_6(string * intlit) {
 //factor -> REALIT 
 //--------------------------------------------------------------------
 Exp * Semantics::factor_7(string * realit) {
-	cout << "Exp * Semantics::factor_7(string * realit)" << endl;
 	PCode* P = new PCode("", "ldc", "r", *realit);
-	Exp* E = new Exp(ST.TReal(), P);
+	Exp* E = new Exp(SymbolTable::instance()->TReal(), P);
 	//E->PPrint(pfs); //printing p-code to .pcd file
 	return E;
 }
@@ -360,9 +345,8 @@ Exp * Semantics::factor_7(string * realit) {
 //factor -> CHRLIT 
 //--------------------------------------------------------------------
 Exp * Semantics::factor_8(string * chrlit) {
-	cout << "Exp * Semantics::factor_8(string * chrlit)" << endl;
 	PCode* P = new PCode("", "ldc", "c", *chrlit);
-	Exp* E = new Exp(ST.TChar(), P);
+	Exp* E = new Exp(SymbolTable::instance()->TChar(), P);
 	//E->PPrint(pfs); //printing p-code to .pcd file
 	return E;
 }

@@ -27,13 +27,11 @@ static map<string, int> SD;
 //-------------------------------------------------------------------------
 Height::Height() :
 		C(0), M(0) {
-	cout << "Height::Height()" << endl;
 	InitStackDelta();
 }
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 void Height::Compute(PCode* P) {
-	cout << "void Height::Compute(PCode* P)" << endl;
 	string op = P->Op();
 	C += SD[op];
 	if (op == "ent") {
@@ -51,20 +49,17 @@ void Height::Compute(PCode* P) {
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 int Height::Maximum(void) {
-	cout << "int Height::Maximum(void)" << endl;
 	return M;
 }
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 void Height::InitStackDelta(void) {
-	cout << "void Height::InitStackDelta(void)" << endl;
 	for (int a = 0; a < 58; a++)
 		SD[Op[a]] = OpDelta[a];
 }
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 void Height::FindHeight(Exp* E) {
-	cout << "void Height::FindHeight(Exp* E)" << endl;
 	if (!E)
 		return;
 	FindHeight(E->LExp);
