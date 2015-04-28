@@ -17,7 +17,7 @@ class Label {
 	static Label *s_instance;
 
 	Label(int w = 5, char f = '0') {
-		label = 1;
+		label = 0;
 		width = w;
 		fillchar = f;
 	}

@@ -36,6 +36,7 @@ extern unsigned col;
 	List<Exp*>* explist;
 }
 
+
 %type <subprog> program_head
 %type <subprog> subprogram_head
 %type <varlist> parameter_list
@@ -119,7 +120,7 @@ program: program_head program_declarations program_body
 	;
 program_head: PROGRAM ID program_parameters SEMICOLON 
 	{Semantics::instance()->tfs << endl << "#002 program_head --> PROGRAM ID(" << (*$2) << ") program_parameters ;"; 
-	 Semantics::instance()->program_head(*$2);}
+	 $$=Semantics::instance()->program_head(*$2);}
 	;
 program_declarations: variable_declarations subprogram_declarations 
 	{Semantics::instance()->tfs << endl << "#003 program_declarations --> variable_declarations subprogram_declarations";}
@@ -171,10 +172,10 @@ subprogram_declaration: subprogram_head variable_declarations compound_statement
 	;
 subprogram_head: FUNCTION ID sub_program_parameters COLON standard_type SEMICOLON 
 	{Semantics::instance()->tfs << endl << "#018 subprogram_head --> FUNCTION ID(" << (*$2) << ") sub_program_parameters : standard_type ; ";
-	 Semantics::instance()->subprogram_head(*$2,$3,$5);}
+	 $$=Semantics::instance()->subprogram_head(*$2,$3,$5);}
 	| PROCEDURE ID sub_program_parameters SEMICOLON 
 	{Semantics::instance()->tfs << endl << "#019 subprogram_head --> PROCEDURE ID(" << (*$2) << ") sub_program_parameters ; ";
-	 Semantics::instance()->subprogram_head(*$2,$3);}
+	 $$=Semantics::instance()->subprogram_head(*$2,$3);}
 	;
 sub_program_parameters: /*EMPTY*/ 
 	{Semantics::instance()->tfs << endl << "#020 sub_program_parameters --> empty "; 

@@ -15,11 +15,11 @@ void SubprogramSymbol::Print(ostream& o, int indent) {
 		o << "  ";
 	o << "lexicallevel(" << lexicallevel << ")";
 	o << " ";
-	o << "elabel(" << ELabel() << ")";
+	o << "elabel(" << elabel << ")";
 	o << " ";
-	o << "splabel(" << SPLabel() << ")";
+	o << "splabel(" << splabel << ")";
 	o << " ";
-	o << "eplabel(" << EPLabel() << ")";
+	o << "eplabel(" << eplabel << ")";
 }
 int SubprogramSymbol::LexicalLevel() {
 	return lexicallevel;
