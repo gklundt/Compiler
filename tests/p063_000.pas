@@ -1,7 +1,7 @@
 {------------------------------------------------------------------------------------}
 {program p063_000 exercises production #063                                          }
 {factor -> ID                                                                        }
-{ID is a constant symbol
+{ID is a constant symbol                                                             }
 {------------------------------------------------------------------------------------}
 {Author: Thomas R. Turner                                                            }
 {E-Mail: trturner@uco.edu                                                            }

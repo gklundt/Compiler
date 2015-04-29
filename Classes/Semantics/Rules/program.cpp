@@ -5,19 +5,19 @@ void Semantics::program(SubprogramSymbol* S, List<Exp*>* compound_statement) {
 	//compound_statement, and the epilog.
 	//-----------------------------------------------------------------------
 	List<Exp*>* prolog = subprogram_prolog(S);
-	cout << endl << "prolog";
-	prolog->Print(cout);
+//	cout << endl << "prolog";
+//	prolog->Print(cout);
 
-	cout << endl << "compound_statement";
-	compound_statement->Print(cout);
+//	cout << endl << "compound_statement";
+//	compound_statement->Print(cout);
 
 	List<Exp*>* epilog = subprogram_epilog(S, compound_statement);
-	cout << endl << "epilog";
-	epilog->Print(cout);
+//	cout << endl << "epilog";
+//	epilog->Print(cout);
 
 	List<Exp*>* programepilog = program_epilog(S);
-	cout << endl << "program epilog";
-	programepilog->Print(cout);
+//	cout << endl << "program epilog";
+//	programepilog->Print(cout);
 	//-----------------------------------------------------------------------
 	//Now, concatenate the prolog, compound_statement, and the epilog into
 	//a single list.

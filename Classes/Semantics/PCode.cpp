@@ -26,7 +26,7 @@ string PCode::Rand1(void) {
 	return rand1;
 }
 string PCode::Rand2(void) {
-	cout << "string PCode::Rand2(void)" << endl;
+//	cout << "string PCode::Rand2(void)" << endl;
 	return rand2;
 }
 void PCode::StoreLabel(string l) {

@@ -1,7 +1,7 @@
 {------------------------------------------------------------------------------------}
 {program p063_000 exercises production #063                                          }
 {factor -> ID                                                                        }
-{ID is a variable
+{ID is a variable                                                                    }
 {------------------------------------------------------------------------------------}
 {Author: Thomas R. Turner                                                            }
 {E-Mail: trturner@uco.edu                                                            }
