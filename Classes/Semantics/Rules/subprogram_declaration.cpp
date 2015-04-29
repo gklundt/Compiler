@@ -31,7 +31,7 @@ void Semantics::subprogram_declaration(SubprogramSymbol* S,
 	//-----------------------------------------------------------------------
 	//Now, print the subprogram to the PCode File
 	//-----------------------------------------------------------------------
-//	L->Print(pfs);
+	L->Print(pfs);
 
 //	ST.Print(tfs);            //Print the symbol table at this lexical level
 	SymbolTable::instance()->PopLocality();         //Pop the current locality

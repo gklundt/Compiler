@@ -3,6 +3,7 @@
 Exp* Semantics::StandardProcedure(StandardProcedureSymbol* S) {
 	PCode* P = new PCode("", "csp", "", S->CSPID());
 	Exp* E = new Exp(SymbolTable::instance()->TVoid(), P);
+	//pfs << "procedure_statement.cpp" << endl;
 	//E->PPrint(pfs);
 	return E;
 }
@@ -44,6 +45,7 @@ Exp* Semantics::StandardProcedure(StandardProcedureSymbol* S, List<Exp*>* e) {
 			, "csp"                        //P-Code Op - Call Standard Procedure
 			, "", S->CSPID());
 	E = new Exp(E, 0, SymbolTable::instance()->TVoid(), P);
+	//pfs << "procedure_statement.cpp" << endl;
 	//E->PPrint(pfs);
 	//E->PPrint(tfs);
 	return E;

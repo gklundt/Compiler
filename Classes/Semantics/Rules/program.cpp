@@ -30,8 +30,7 @@ void Semantics::program(SubprogramSymbol* S, List<Exp*>* compound_statement) {
 	//-----------------------------------------------------------------------
 	//Now, print the subprogram to the PCode File
 	//-----------------------------------------------------------------------
-	cout << "\n the big reveal \n" << endl;
-	L->Print(cout);
+	L->Print(pfs);
 
 }
 
